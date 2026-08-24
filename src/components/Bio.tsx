@@ -1,4 +1,4 @@
-// PLACEHOLDER_X_HANDLE / PLACEHOLDER_CONTACT_EMAIL: swap in real links before launch.
+// PLACEHOLDER_CONTACT_EMAIL: swap in real email before launch.
 export default function Bio() {
   return (
     <section className="max-w-3xl mx-auto px-4 pt-20 pb-16">
@@ -19,7 +19,7 @@ export default function Bio() {
           GitHub
         </a>
         <a
-          href="https://x.com/PLACEHOLDER_X_HANDLE"
+          href="https://x.com/Sam39741"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:underline underline-offset-4"

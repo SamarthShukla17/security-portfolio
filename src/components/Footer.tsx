@@ -1,4 +1,4 @@
-// PLACEHOLDER_X_HANDLE / PLACEHOLDER_CONTACT_EMAIL: swap in real links before launch.
+// PLACEHOLDER_CONTACT_EMAIL: swap in real email before launch.
 export default function Footer() {
   return (
     <footer className="border-t border-muted/20 mt-24">
@@ -6,7 +6,7 @@ export default function Footer() {
         <p>&copy; {new Date().getFullYear()} Samarth Shukla. All rights reserved.</p>
         <div className="flex gap-4">
           <a
-            href="https://x.com/PLACEHOLDER_X_HANDLE"
+            href="https://x.com/Sam39741"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-foreground hover:underline underline-offset-4"
