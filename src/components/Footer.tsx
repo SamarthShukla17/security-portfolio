@@ -1,8 +1,8 @@
 // PLACEHOLDER_X_HANDLE / PLACEHOLDER_CONTACT_EMAIL: swap in real links before launch.
 export default function Footer() {
   return (
-    <footer className="border-t border-foreground/10 mt-24">
-      <div className="max-w-3xl mx-auto px-4 py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-xs text-foreground/40">
+    <footer className="border-t border-muted/20 mt-24">
+      <div className="max-w-3xl mx-auto px-4 py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-xs text-muted/60">
         <p>&copy; {new Date().getFullYear()} Samarth Shukla. All rights reserved.</p>
         <div className="flex gap-4">
           <a

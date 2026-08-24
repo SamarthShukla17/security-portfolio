@@ -11,42 +11,46 @@ export default function Home() {
   return (
     <main>
       <Bio />
-      <EngineeringSection />
 
-      <section className="max-w-3xl mx-auto px-4 py-16 border-t border-foreground/10 text-sm">
+      <section className="max-w-3xl mx-auto px-4 py-16 border-t border-muted/20 text-sm">
         <div className="flex items-baseline justify-between mb-6">
-          <p className="text-foreground/50">$ ls writeups/ | head -3</p>
-          <Link href="/writeups" className="hover:underline underline-offset-4">
+          <p className="text-muted">$ ls writeups/ | head -3</p>
+          <Link href="/writeups" className="text-muted hover:text-foreground hover:underline underline-offset-4">
             view all →
           </Link>
         </div>
 
         {recentWriteups.length === 0 ? (
-          <p className="text-foreground/40">-- no writeups published yet --</p>
+          <p className="text-muted/60">-- no writeups published yet --</p>
         ) : (
-          <div className="border border-foreground/10">
-            {recentWriteups.map((w) => (
-              <Link
-                key={w.slug}
-                href={`/writeups/${w.slug}`}
-                className="group grid grid-cols-[6rem_1fr_7rem_6rem] gap-4 items-center px-3 py-2 border-b border-foreground/5 last:border-b-0 hover:bg-foreground/5"
-              >
-                <span className="text-foreground/50">
-                  {format(new Date(w.date), "yyyy-MM-dd")}
-                </span>
-                <span className="truncate">
-                  <span className="inline-block w-3 text-accent opacity-0 group-hover:opacity-100">
-                    &gt;
+          <div className="border border-muted/20">
+            {recentWriteups.map((w) => {
+              const isDraft = w.status === "Draft";
+              return (
+                <Link
+                  key={w.slug}
+                  href={`/writeups/${w.slug}`}
+                  className={`grid grid-cols-[6rem_1fr_7rem_6rem] gap-4 items-center px-3 py-2 border-b border-muted/10 last:border-b-0 hover:bg-muted/5 ${
+                    isDraft ? "opacity-50" : ""
+                  }`}
+                >
+                  <span className="text-muted">
+                    {format(new Date(w.date), "yyyy-MM-dd")}
                   </span>
-                  {w.title}
-                </span>
-                <span className="text-foreground/50 truncate">{w.protocol}</span>
-                <span className={severityClassName[w.severity]}>{w.severity}</span>
-              </Link>
-            ))}
+                  <span className={`truncate ${isDraft ? "text-muted italic" : "text-foreground"}`}>
+                    {isDraft && "[DRAFT] "}
+                    {w.title}
+                  </span>
+                  <span className="text-muted truncate">{w.protocol}</span>
+                  <span className={severityClassName[w.severity]}>{w.severity}</span>
+                </Link>
+              );
+            })}
           </div>
         )}
       </section>
+
+      <EngineeringSection />
     </main>
   );
 }

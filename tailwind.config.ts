@@ -11,8 +11,9 @@ const config: Config = {
     extend: {
       colors: {
         background: "rgb(var(--background-rgb) / <alpha-value>)",
+        surface: "rgb(var(--surface-rgb) / <alpha-value>)",
         foreground: "rgb(var(--foreground-rgb) / <alpha-value>)",
-        accent: "rgb(var(--accent-rgb) / <alpha-value>)",
+        muted: "rgb(var(--muted-rgb) / <alpha-value>)",
       },
       fontFamily: {
         mono: [

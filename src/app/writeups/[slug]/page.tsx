@@ -39,10 +39,10 @@ export default async function WriteupPage({
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-12 text-sm">
-      <div className="border border-foreground/10 px-4 py-3 mb-10">
-        <p className="text-foreground/40">## {meta.slug}.md</p>
-        <p className="text-base text-foreground mt-1">{meta.title}</p>
-        <div className="flex flex-wrap gap-x-6 gap-y-1 mt-3 text-foreground/50">
+      <div className="border border-muted/20 px-4 py-3 mb-10">
+        <p className="text-muted/60">## {meta.slug}.md</p>
+        <p className="text-base text-foreground mt-1 font-medium">{meta.title}</p>
+        <div className="flex flex-wrap gap-x-6 gap-y-1 mt-3 text-muted">
           <span>date: {format(new Date(meta.date), "yyyy-MM-dd")}</span>
           <span>protocol: {meta.protocol}</span>
           <span>

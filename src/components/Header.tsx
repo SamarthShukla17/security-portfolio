@@ -10,7 +10,7 @@ const navLinks = [
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 bg-background border-b border-foreground/10">
+    <header className="sticky top-0 z-50 bg-background border-b border-muted/20">
       <nav className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between text-sm">
         <Link
           href="/"
@@ -23,7 +23,7 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-foreground no-underline hover:underline underline-offset-4"
+              className="text-muted no-underline hover:text-foreground hover:underline underline-offset-4"
             >
               {link.label}
             </Link>

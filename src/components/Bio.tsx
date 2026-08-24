@@ -2,14 +2,11 @@
 export default function Bio() {
   return (
     <section className="max-w-3xl mx-auto px-4 pt-20 pb-16">
-      <p className="text-foreground/50 mb-4">$ whoami</p>
+      <p className="text-muted mb-4">$ whoami</p>
 
-      <h1 className="text-xl sm:text-2xl text-foreground mb-3 text-balance">
-        Solana security researcher — Rust, Anchor & Pinocchio internals.
-        Currently hunting on Immunefi and Sherlock.
-        <span className="cursor-blink" aria-hidden="true">
-          _
-        </span>
+      <h1 className="text-xl sm:text-2xl text-foreground mb-3 text-balance font-normal">
+        Solana security researcher — Rust, Anchor, and Pinocchio internals.
+        Active on Immunefi and Sherlock.
       </h1>
 
       <div id="contact" className="flex flex-wrap gap-x-6 gap-y-2 mt-8 text-sm">

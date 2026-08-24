@@ -10,21 +10,6 @@ export interface Project {
 // Add future tools to this array — EngineeringSection renders it as-is.
 export const projects: Project[] = [
   {
-    slug: "solana-agentic-fuzzing-harness",
-    name: "Solana Agentic Fuzzing & Invariant Harness",
-    description:
-      "A standalone Rust crate built on LiteSVM, used across live bug bounty engagements. " +
-      "It hand-declares instruction and account layouts from a target's committed IDL rather " +
-      "than importing the target repo's own (sometimes broken) dependency tree, so a stale or " +
-      "conflicting transitive dependency can never block a run. Originally built to verify a " +
-      "Midas Protocol finding — 5 invariants checked across a 300-iteration randomized " +
-      "adversarial run — then generalized and reused to trace Orca's Whirlpools and xORCA " +
-      "programs. It's extended per-target as new engagements come up, rather than rebuilt " +
-      "from scratch each time.",
-    stack: ["Rust", "LiteSVM", "Solana", "Anchor", "Pinocchio"],
-    sourceUrl: "/solana-agentic-fuzzing-harness.md",
-  },
-  {
     slug: "verifibet",
     name: "VerifiBet",
     description:
