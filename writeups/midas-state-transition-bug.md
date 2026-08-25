@@ -7,69 +7,28 @@ status: "Disputed"
 summary: "reject_mint_request and reject_redeem_request contain zero token accounts — neither instruction can return user funds. mint_request transfers payment tokens immediately, before approval, to a non-custodied admin-set external wallet, with no on-chain recovery path on rejection. Submitted to Midas's security team; response received: intended behavior."
 ---
 
-## Summary
+## What I Was Looking For
 
-`reject_mint_request` and `reject_redeem_request` — the two instructions
-meant to let Midas unwind a pending mint or redeem request — contain zero
-token accounts in their account lists. Neither instruction can move
-funds, which means neither can actually return anything to a user once a
-request is rejected. On the mint side this is more serious than it
-sounds: `mint_request` transfers the user's payment tokens immediately,
-before any approval step, to `vault_common.tokens_receiver` — an address
-the program treats as an arbitrary external wallet, not one it custodies
-itself. If that request is later rejected, there is no on-chain path
-back to the user for those funds.
+Midas runs an approve/reject flow on top of mint and redeem: a user submits a request, an admin later approves or rejects it. My first pass on any protocol with a two-step admin gate like this is to check the unhappy path first, not the happy one — approve flows get exercised constantly and get bugs shaken out of them by normal usage; reject flows are the ones nobody hits until something's already gone wrong, which is exactly when you don't want a surprise.
 
-## Technical Detail
+So I went straight to `reject_mint_request` and `reject_redeem_request` and read their account lists before reading anything else.
 
-The mint-side gap is the one that matters. `mint_request` moves payment
-tokens out of the user's control at request time, ahead of approval,
-straight to `vault_common.tokens_receiver`. That receiver is
-admin-configured and external to the program — the program does not
-hold the tokens in a vault or PDA it controls, so once they land there,
-on-chain recovery isn't possible regardless of what
-`reject_mint_request` does or doesn't do. Because `reject_mint_request`
-has no token accounts in its context, it was never going to be able to
-claw anything back even if the receiver were custodied — but the
-underlying trust assumption (send first, approve later, to an address
-the program can't reach back into) is the real issue.
+## The Gap
 
-The redeem-side gap is less severe. `redeem_request` moves the user's
-shares into a program-owned PDA rather than an external wallet, so the
-funds stay within the program's control even after a rejection.
-`reject_redeem_request` still doesn't move them back automatically — it
-also has zero token accounts — but because the PDA is custodied by the
-program, an admin can manually recover the funds via the existing
-`withdraw_tokens` instruction. That's a process gap, not a fund-safety
-gap.
+Neither instruction has a token account anywhere in its context. That's not a subtle omission — it's the kind of thing that's obvious the moment you check, which is also why it's easy to miss: nobody expects an instruction literally named "reject" to be incapable of moving a token. Zero token accounts means zero capacity to return funds, structurally, regardless of what the instruction logic does with them.
 
-## Verification
+Whether that's catastrophic or just a paperwork gap depends entirely on where the funds were sitting when the reject fires, and that's where mint and redeem diverge.
 
-Traced by hand first, then independently corroborated with a standalone
-LiteSVM invariant/fuzz harness built specifically for this: 5 invariants,
-run across a 300-iteration randomized sequence of mint/redeem/reject
-actions. All 300 iterations passed clean — no invariant caught a
-violation, which is consistent with (and confirms) the manual read: the
-gap is in what the reject instructions *don't* do, not in a state
-transition that can be forced into an inconsistent shape. The harness's
-job here was corroboration of an already-identified issue, not
-discovery.
+**Mint side — this is the one that matters.** `mint_request` moves the user's payment tokens immediately, before any approval step, to `vault_common.tokens_receiver`. I checked what that account actually is rather than assuming: it's admin-configured and external — not a vault or PDA the program holds custody of. Once those tokens land there, no instruction in the program can reach back into that wallet. It's not "the reject instruction forgot a step," it's "there is no step that could exist," because the program never retained control of the funds in the first place. The trust model here is send-first-approve-later, to an address the program has no authority over. `reject_mint_request` having no token accounts isn't the root cause; it's a symptom of the root cause, which is that the funds already left on request, not on approval.
 
-## Status
+**Redeem side — less severe, and worth being precise about why.** `redeem_request` moves the user's shares into a program-owned PDA, not an external wallet. So on rejection, the funds are still inside the program's custody — `reject_redeem_request` just doesn't move them back *automatically*, since it also has zero token accounts. But because the PDA is custodied by the program, an admin can manually pull the funds back out through the existing `withdraw_tokens` instruction. That's a missing automation step, not a loss of funds. I want to be exact about that distinction because it's the difference between "process gap" and "money is gone," and conflating the two would overstate the redeem-side finding.
 
-Submitted directly to the Midas security team via their disclosure
-channel. Their response: this is intended behavior. That's noted here
-transparently — this is an open disagreement about trust assumptions,
-not a confirmed vulnerability, and the severity/status fields on this
-writeup reflect that (Critical *(disputed)*, not Critical).
+## Verifying It Wasn't a Misread
 
-## Why It's Still Worth Documenting
+Hand-tracing an account list is fast, but it's also exactly the kind of thing you can misread once and then anchor on. I built a standalone LiteSVM invariant/fuzz harness to check the claim independently rather than just re-reading the same code a second time: 5 invariants around fund conservation and request-state consistency, run across a 300-iteration randomized sequence of mint/redeem/reject actions in arbitrary order. All 300 passed clean — no invariant fired. That's the expected result if the bug is "the reject instructions structurally can't move funds" rather than "some sequence of calls corrupts state," and it matched the hand trace. The harness wasn't how I found this; it's how I made sure the hand trace was right before writing it up.
 
-Whether or not it's classified as a bug, the underlying trust assumption
-is worth being explicit about: a user's payment tokens leave their
-control and move to an uncustodied external address *before* any
-approval step, with no on-chain recovery path if that request is later
-rejected. Calling that "intended" doesn't change what it is for anyone
-relying on the reject flow as a safety net. Documenting the disagreement
-— rather than dropping the finding because it wasn't confirmed — is more
-useful to anyone evaluating Midas than silence would be.
+## Disclosure
+
+Sent directly to the Midas security team through their disclosure channel. Their read: this is intended behavior, not a bug — consistent with an institutional compliance model where rejected KYC/AML flows get settled off-chain rather than reversed on-chain.
+
+I'm not going to argue with a team about their own trust model in their own writeup, so this is filed as disputed, not confirmed — that's what the severity field reflects (`Critical (disputed)`, not `Critical`). But disputed isn't the same as resolved. Whether it's "intended" or not doesn't change what a user relying on the reject flow as a safety net actually gets: their payment tokens left their control before approval, to an address the program can't recover from, with no reject-path way back. Whatever you call that, it's the actual behavior anyone integrating with or depositing into Midas is exposed to, and that's worth having on the record even in disagreement rather than dropped for lack of a confirmation.
