@@ -6,7 +6,6 @@ export default function Bio() {
 
       <h1 className="text-xl sm:text-2xl text-foreground mb-3 text-balance font-normal">
         Solana security researcher — Rust, Anchor, and Pinocchio internals.
-        Active on Immunefi and Sherlock.
       </h1>
 
       <div id="contact" className="flex flex-wrap gap-x-6 gap-y-2 mt-8 text-sm">
