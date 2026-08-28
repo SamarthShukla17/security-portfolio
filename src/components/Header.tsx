@@ -5,7 +5,6 @@ const HANDLE = "samarth@security:~$";
 const navLinks = [
   { label: "Writeups", href: "/writeups" },
   { label: "Engineering", href: "/#engineering" },
-  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Header() {
@@ -28,6 +27,12 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          <a
+            href="mailto:samarthofficial52@gmail.com"
+            className="text-foreground no-underline hover:underline underline-offset-4"
+          >
+            Hire for Audit
+          </a>
         </div>
       </nav>
     </header>

@@ -1,4 +1,3 @@
-// PLACEHOLDER_CONTACT_EMAIL: swap in real email before launch.
 export default function Footer() {
   return (
     <footer className="border-t border-muted/20 mt-24">
@@ -22,7 +21,7 @@ export default function Footer() {
             GitHub
           </a>
           <a
-            href="mailto:PLACEHOLDER_CONTACT_EMAIL@example.com"
+            href="mailto:samarthofficial52@gmail.com"
             className="hover:text-foreground hover:underline underline-offset-4"
           >
             Contact

@@ -1,4 +1,3 @@
-// PLACEHOLDER_CONTACT_EMAIL: swap in real email before launch.
 export default function Bio() {
   return (
     <section className="max-w-3xl mx-auto px-4 pt-20 pb-16">
@@ -26,7 +25,7 @@ export default function Bio() {
           X / Twitter
         </a>
         <a
-          href="mailto:PLACEHOLDER_CONTACT_EMAIL@example.com"
+          href="mailto:samarthofficial52@gmail.com"
           className="hover:underline underline-offset-4"
         >
           Contact
