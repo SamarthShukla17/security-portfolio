@@ -11,10 +11,11 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   try {
-    const { meta } = await getWriteupBySlug(params.slug);
+    const { slug } = await params;
+    const { meta } = await getWriteupBySlug(slug);
     return {
       title: `${meta.title} | Security Portfolio`,
       description: meta.summary,
@@ -27,11 +28,12 @@ export async function generateMetadata({
 export default async function WriteupPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   let writeup;
   try {
-    writeup = await getWriteupBySlug(params.slug);
+    writeup = await getWriteupBySlug(slug);
   } catch {
     notFound();
   }

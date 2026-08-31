@@ -1,45 +1,74 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root {
-  --background: #1a1c1e;
-  --surface: #222222;
-  --foreground: #d4d4c4;
-  --muted: #b0b0b0;
+@custom-variant dark (&:is(.dark *));
 
-  /* RGB channels for the same colors, used by Tailwind's opacity-modifier
-     utilities (e.g. text-muted/50), which require rgb(var(...) / <alpha-value>). */
-  --background-rgb: 26 28 30;
-  --surface-rgb: 34 34 34;
-  --foreground-rgb: 212 212 196;
-  --muted-rgb: 176 176 176;
+@theme {
+  --color-background: rgb(var(--background-rgb));
+  --color-surface: rgb(var(--surface-rgb));
+  --color-foreground: rgb(var(--foreground-rgb));
+  --color-muted: rgb(var(--muted-rgb));
+
+  --font-mono:
+    var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-html {
-  color-scheme: dark;
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  letter-spacing: -0.01em;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-::selection {
-  background: rgb(var(--foreground-rgb) / 0.25);
-  color: var(--foreground);
+@utility text-balance {
+  text-wrap: balance;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  :root {
+    --background: #1a1c1e;
+    --surface: #222222;
+    --foreground: #d4d4c4;
+    --muted: #b0b0b0;
+
+    /* RGB channels for the same colors, used by Tailwind's opacity-modifier
+     utilities (e.g. text-muted/50), which require rgb(var(...) / <alpha-value>). */
+    --background-rgb: 26 28 30;
+    --surface-rgb: 34 34 34;
+    --foreground-rgb: 212 212 196;
+    --muted-rgb: 176 176 176;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family:
+      var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    letter-spacing: -0.01em;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: rgb(var(--foreground-rgb) / 0.25);
+    color: var(--foreground);
   }
 }
 
