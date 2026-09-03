@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Security Portfolio
 
-## Getting Started
+Live site: **[samarthshukla17.github.io/security-portfolio](https://samarthshukla17.github.io/security-portfolio/)**
 
-First, run the development server:
+Independent Solana/Rust security research — audit trails and disclosure writeups, published as they clear for public release.
+
+## Start Here
+
+- **[Methodology](/writeups/methodology)** — the method (scope-gate → invariants → six bug-pattern classes × seven attack angles → falsification-first → PoC-or-it's-a-note), the toolkit, and a category-level summary of engagement work across Solana/Rust DeFi, Substrate cross-chain bridges, EVM account-abstraction, and NEAR/Wasm contracts.
+- **[Writeups](/writeups)** — per-target audit trails, published only once a finding is either confirmed/disputed with the program or the underlying protocol has cleared for public disclosure. Nothing here names a target still under an active, undisclosed bounty engagement.
+
+## About This Repo
+
+This is the source for the portfolio site itself — a Next.js static export, deployed to both Vercel and GitHub Pages. Writeups are a file-based CMS: every entry in [`writeups/`](writeups/) is a Markdown file with YAML frontmatter (`title`, `date`, `protocol`, `severity`, `status`, `summary`), rendered through [`app/writeups/`](src/app/writeups/) and indexed by [`lib/writeups.ts`](src/lib/writeups.ts).
+
+### Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # local dev server, served at /
+npm run build    # static export to out/ (basePath applies only under GITHUB_ACTIONS=true)
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See [`next.config.mjs`](next.config.mjs) for the dual-deployment basePath logic and [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) for the GitHub Pages build.

@@ -20,7 +20,12 @@ export interface WriteupMeta {
     | "Informational"
     | "N/A"
     | "TBD";
-  status: "Confirmed" | "Disputed" | "Negative (Clean Audit)" | "Draft";
+  status:
+    | "Confirmed"
+    | "Disputed"
+    | "Negative (Clean Audit)"
+    | "Draft"
+    | "Methodology";
   summary: string;
 }
 
