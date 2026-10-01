@@ -4,12 +4,12 @@ date: "2026-09-03"
 protocol: "Cross-Protocol"
 severity: "N/A"
 status: "Methodology"
-summary: "The method, the toolkit, and a category-level summary of engagement work: full security reviews across Solana/Rust DeFi (AMM, staking, lending, perps, oracle-aggregator), Substrate cross-chain bridges, EVM stablecoin/account-abstraction, and NEAR/Wasm contracts — roughly seven protocols, multi-firm-audited targets."
+summary: "The method and the toolkit, with a high-level note on the kinds of work they have been applied to: multiple protocol types across EVM, Rust, and WASM ecosystems."
 ---
 
 ## Where I Am, Honestly
 
-I'm early in this — an independent researcher, not a senior auditor with a firm behind me. I don't have years of engagements to point to. What I do have is a method I've applied consistently across enough real, audited targets to know it holds up, and a track record of negatives I can actually defend rather than just claim. This page is about the method, because on a short track record, *how I think* is the more honest credential than a badge count.
+I'm early in this — an independent researcher, not a senior auditor with a firm behind me. I don't have years of engagements to point to. What I do have is a method I've applied consistently across enough real, audited targets to know it holds up. This page is about the method, because on a short track record, *how I think* is the more honest credential than a badge count.
 
 ## The Method
 
@@ -40,11 +40,9 @@ Every target goes through the same six steps, in order, regardless of chain or l
 
 ## What I've Actually Worked On
 
-Full security reviews across **Solana/Rust DeFi** — AMM, staking, lending, perps, and an oracle-aggregator layer — **Substrate-based cross-chain bridges**, **EVM stablecoin and account-abstraction infrastructure**, and **NEAR/Wasm contracts**. Roughly seven protocols in total, all multi-firm-audited targets before I ever touched them — meaning the easy bugs were already gone, and whatever surface remained was exactly the seam the method above is built to find.
+Full security reviews across multiple protocol types in the EVM, Rust, and WASM ecosystems. Targets are typically ones that have already been audited, so the easy bugs are already gone, and the surface that remains is the seam the method above is built to find.
 
 Some of this work is still in disclosure, and some has closed without a reward. I'm not characterizing individual outcomes here.
-
-I'm not naming specific protocols or describing specific bug mechanics here — most of this work sits under active bug-bounty program terms, and disclosure discipline doesn't get suspended just because a page is a portfolio piece instead of a report. The [writeups on this site](/writeups) are the targets where full technical detail is actually clear to publish.
 
 ## Why This Is the Credential, Not the Résumé
 
