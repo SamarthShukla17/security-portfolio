@@ -4,7 +4,7 @@ date: "2026-09-03"
 protocol: "Cross-Protocol"
 severity: "N/A"
 status: "Methodology"
-summary: "The method, the toolkit, and a category-level summary of engagement work: full security reviews across Solana/Rust DeFi (AMM, staking, lending, perps, oracle-aggregator), Substrate cross-chain bridges, EVM stablecoin/account-abstraction, and NEAR/Wasm contracts — roughly seven protocols, multi-firm-audited targets, one independently-confirmed critical-severity bridge issue."
+summary: "The method, the toolkit, and a category-level summary of engagement work: full security reviews across Solana/Rust DeFi (AMM, staking, lending, perps, oracle-aggregator), Substrate cross-chain bridges, EVM stablecoin/account-abstraction, and NEAR/Wasm contracts — roughly seven protocols, multi-firm-audited targets."
 ---
 
 ## Where I Am, Honestly
@@ -42,7 +42,7 @@ Every target goes through the same six steps, in order, regardless of chain or l
 
 Full security reviews across **Solana/Rust DeFi** — AMM, staking, lending, perps, and an oracle-aggregator layer — **Substrate-based cross-chain bridges**, **EVM stablecoin and account-abstraction infrastructure**, and **NEAR/Wasm contracts**. Roughly seven protocols in total, all multi-firm-audited targets before I ever touched them — meaning the easy bugs were already gone, and whatever surface remained was exactly the seam the method above is built to find.
 
-One engagement produced an independently-confirmed critical-severity finding in a cross-chain bridge's consensus-verification path — live-chain-confirmed, reproduced with a runnable proof of concept, and validated as an independent finding by the program rather than dismissed as a known issue. The rest of that batch closed as reasoned negatives: hypotheses formed, dynamically tested against real or faithfully-extracted source, and traced to an existing, correctly-functioning guard rather than left as an unverified assumption.
+Some of this work is still in disclosure, and some has closed without a reward. I'm not characterizing individual outcomes here.
 
 I'm not naming specific protocols or describing specific bug mechanics here — most of this work sits under active bug-bounty program terms, and disclosure discipline doesn't get suspended just because a page is a portfolio piece instead of a report. The [writeups on this site](/writeups) are the targets where full technical detail is actually clear to publish.
 
