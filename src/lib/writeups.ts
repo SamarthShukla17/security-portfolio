@@ -25,6 +25,7 @@ export interface WriteupMeta {
     | "Disputed"
     | "Negative (Clean Audit)"
     | "Draft"
+    | "Paused (Unverified)"
     | "Methodology";
   summary: string;
 }

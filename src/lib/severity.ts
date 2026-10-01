@@ -19,5 +19,6 @@ export const statusClassName: Record<WriteupMeta["status"], string> = {
   Disputed: "text-muted",
   "Negative (Clean Audit)": "text-muted",
   Draft: "text-muted/60",
+  "Paused (Unverified)": "text-muted",
   Methodology: "text-foreground",
 };

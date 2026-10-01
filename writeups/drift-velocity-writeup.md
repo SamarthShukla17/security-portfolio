@@ -1,121 +1,76 @@
 ---
-title: "Drift Protocol / Velocity DEX — Liquidation Timing, Self-Trade Guards, and a Live On-Chain Surprise"
+title: "Drift Protocol / Velocity DEX — Investigation Notes (Paused, Unverified)"
 date: "2026-08-31"
 protocol: "Drift Protocol (Velocity DEX)"
-severity: "N/A"
-status: "Negative (Clean Audit)"
-summary: "Two threads: a liquidation-timing behavior initially assessed High severity, retracted after the protocol's own documentation confirmed it as intended design. A missing explicit self-trade guard, traced via call-hierarchy analysis into the matching engine and confirmed covered — then found moot, since the program's entire instruction dispatcher is currently disabled, independently confirmed against live mainnet transaction data."
+severity: "TBD"
+status: "Paused (Unverified)"
+summary: "Two lines of investigation, both paused and unverified: a liquidation-timing hypothesis initially assessed High severity, later provisionally set aside after the protocol's own documentation appeared to describe it as intended design; and a self-trade guard question that appeared covered but whose reachability was not re-verified. Neither conclusion has had a fresh verification pass."
 ---
 
-**Target:** Drift Protocol v2, rebranded **Velocity DEX** (July 2026, following a $295M DPRK-linked exploit) — `velocity-exchange/protocol-v2`
+> **Status note (2026-10-01):** This investigation is paused and its conclusions are **unverified**.
+> An earlier version of this page labelled it a clean audit / retracted finding. That was premature:
+> neither line of investigation has been re-verified, the liquidation-timing result has not been
+> confirmed either as intended behavior or as a real issue, and it may be affected by how the
+> reproduction was built. The on-chain observations in §3 reflect a single point in time and may be
+> out of date. Treat this page as working notes, not a verdict.
 
-**Program ID:** `dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH` (mainnet)
+**Target:** Drift Protocol v2, rebranded Velocity DEX.
 
-**Scope of this writeup:** a margin-liquidation timing hypothesis that was self-corrected after checking the target's own design documentation, and a semantic call-graph trace of a self-trade guard that ended by discovering the entire program's instruction dispatcher is currently disabled — confirmed independently on live mainnet, not just from source.
+**Scope of this writeup:** two lines of investigation on the same codebase — a margin-liquidation timing hypothesis, and a trace of a self-trade guard. Both are paused. Mechanism-level detail has been deliberately omitted.
 
 ---
 
 ## 1. Summary
 
-Two investigations, presented together because they illustrate the same discipline from opposite directions: one shows walking back an initially plausible finding after checking the right document; the other shows a finding surviving code-level scrutiny but dying anyway once reachability was checked first, before deeper analysis was even attempted.
+Two investigations, presented together because they illustrate the same discipline from opposite directions: stating a conclusion only as strongly as the checks behind it.
 
-1. A liquidation-timing behavior — trader positions escaping liquidation when oracle price recovers mid-transaction — was dynamically confirmed as real code behavior, initially assessed as a High-severity finding, then **retracted** after the protocol's own liquidation-engine documentation was found to describe it as explicitly intended.
-2. A missing explicit `maker != taker` guard in `place_and_make_perp_order`, flagged during a systematic per-instruction security checklist pass, was traced via LSP call-hierarchy analysis into the matching engine. The trace found the guard *does* exist and *does* cover this path — but the entire question turned out to be moot: **the program's instruction dispatcher is currently fully disabled**, a fact confirmed independently against live mainnet transaction logs, not inferred from source alone.
+1. A liquidation-timing hypothesis was reproduced in a local test, initially assessed as potentially High severity, then **provisionally set aside, unverified** after the protocol's own documentation appeared to describe the relevant behavior as intended. That reading of the documentation has not been independently confirmed, and the reproduction has not been re-run against an unmodified target.
+2. A question about whether one instruction carries an explicit guard against a trader matching against itself was traced via call-hierarchy analysis. The trace appeared to show an existing guard covers the path. The instruction's reachability was also checked once and appeared limited at the time. **Neither result has been re-verified**, and the on-chain state may have changed.
 
 ---
 
-## 2. Liquidation timing: from "High severity" to retracted
+## 2. Liquidation timing: provisionally set aside — unverified
 
 ### 2.1 The observed behavior
 
-Drift's margin system computes account health using instantaneous ("strict") oracle pricing rather than a time-weighted average. Dynamic testing (a constructed Rust unit test against the actual margin-calculation code, not a hypothetical) confirmed: if an account crosses into liquidatable territory and the oracle price partially recovers before a liquidation instruction lands, the liquidation reverts — the position survives — even though the account was liquidatable moments earlier.
+A local reproduction suggested a candidate way for a position to avoid liquidation depending on how account health is evaluated against the oracle price. The initial framing treated this as a potential evasion mechanism and assessed it at High severity.
 
-The initial framing treated this as an exploitable evasion mechanism and assessed it at High severity.
+The reproduction was built against a locally adjusted copy of the target code rather than an unmodified build, so the result may reflect the test setup rather than production behavior. This has not been ruled out.
 
-### 2.2 The correction
+### 2.2 The provisional set-aside
 
-Before submission, the target's own documentation was checked directly rather than relying on the plausibility of the initial hypothesis. Velocity's liquidation-engine docs state explicitly:
+Before any submission, the target's own documentation was checked rather than relying on the plausibility of the initial hypothesis. The documentation appears to describe the relevant behavior as a deliberate design trade-off.
 
-> *"If the price moves in favor of the user, liquidation slows down, since the position is recovering naturally."*
+Two further checks were run:
 
-— and separately describe partial liquidation as deliberately throttled across slots, precisely to allow a recovering position room to avoid being fully closed out on a transient price spike. This is not an oversight; it is the documented design trade-off against the alternative (TWAP-based liquidation, which would be *worse* for protocol solvency during an actual crash, since it would liquidate positions based on a stale, lagging price rather than current market reality).
+- **Attacker-controlled trigger?** Apparently not — the triggering condition looked like ordinary market movement rather than something a trader could induce on demand. Every finding that survives to submission has to answer "who can trigger this, against whom."
+- **Audit cross-reference.** The target's published audits were checked. They show prior attention to the same general area, without any of them clearly flagging this behavior as a defect.
 
-Two further checks were run before retracting:
-
-- **Attacker-controlled trigger?** No — the recovery event is market noise (an external price move), not something a trader can induce on demand. Every finding that survives to submission in this line of work has to answer "who can trigger this, against whom" — here, nobody can trigger it at will.
-- **Audit cross-reference.** Checked Drift's listed audits (Zellic, Neodyme, Trail of Bits). Found a related-but-distinct finding (`ND-DFT1-MD-01`) in the same neighborhood of the liquidation engine, confirming the area had prior audit attention, without finding this exact behavior flagged as a defect by any of them — consistent with it being intended rather than overlooked.
-
-**Conclusion: retracted.** The dynamic reproduction is real and the code behaves exactly as tested; it is not a vulnerability. This is kept as a documented retraction with its full technical trail rather than quietly discarded, because the correction — checking the target's own stated design intent before severity, not after — is the actual demonstrable skill here.
+**Conclusion: provisionally set aside, unverified.** This is not a confirmed negative and not a confirmed finding. It is kept as a documented working note with the reasoning behind why it was paused.
 
 ---
 
-## 3. Self-trade guard trace: a call-hierarchy analysis that dead-ends in the right place
+## 3. Self-trade guard trace: paused
 
 ### 3.1 The candidate
 
-A systematic, instruction-by-instruction security checklist pass (the kind used to catch Solana-specific vulnerability classes: missing signer checks, missing owner checks, unchecked PDA seeds, arbitrary CPI targets, duplicate-account aliasing, unchecked arithmetic) flagged one item across ~30 Drift instructions reviewed: `place_and_make_perp_order` has no *explicit*, instruction-level check that the maker and taker are different accounts — unlike every other paired-account instruction in the codebase (liquidation, transfer_deposit, transfer_pools, transfer_perp_position all carry an explicit `x_key != y_key` guard). Flagged as low-confidence pending a deeper trace, since a structurally similar guard was known to exist somewhere in the general order-matching code, but not yet confirmed to actually cover this specific instruction's path.
+A systematic, instruction-by-instruction security checklist pass flagged that one order-placement instruction has no *explicit*, instruction-level check that the two counterparties differ, unlike other paired-account instructions in the codebase. It was flagged as low-confidence pending a deeper trace.
 
 ### 3.2 The trace
 
-Built a reusable LSP-driven call-graph tool (`rust-analyzer` spoken directly over its JSON-RPC/stdio protocol — no client library) specifically to answer this kind of question with certainty instead of "probably." Two facts needed connecting:
+A call-hierarchy trace (using a language server directly rather than text search) appeared to show that a general guard in the order-matching logic is reachable from this instruction. A residual question about the granularity of that guard was noted and not pursued.
 
-**Does the general self-trade guard apply to `place_and_make`'s specific maker?**
+### 3.3 The reachability check
 
-```rust
-// controller/orders.rs:1517 and :4395
-for (maker_key, user_account_loader) in makers_and_referrer.0.iter() {
-    if maker_key == taker_key {
-        continue;
-    }
-    ...
-}
-```
+Before going deeper, the cheapest falsification was run first: whether the instruction is callable in the current build. At the time of checking, source inspection and a single on-chain check both suggested the program's trading instructions were unavailable. That observation has **not been re-verified**, and the current state is unknown.
 
-**Does `place_and_make_perp_order`'s handler route its named maker into this exact collection?**
-
-```rust
-// instructions/user.rs — handle_place_and_make_perp_order
-let (mut makers_and_referrer, mut makers_and_referrer_stats) =
-    load_user_maps(remaining_accounts_iter, true)?;
-makers_and_referrer.insert(ctx.accounts.user.key(), ctx.accounts.user.clone())?;
-```
-
-Yes. `handle_place_and_make_perp_order` inserts its own designated maker (`ctx.accounts.user`) into the same `makers_and_referrer` map that `fulfill_perp_order`'s matching logic iterates with the `maker_key == taker_key` skip-guard. The two code paths are connected — the original checklist pass's uncertainty about whether they were related is resolved: they are, and the guard does fire for this instruction.
-
-**One residual precision gap, noted for the record:** the guard compares Solana account keys, not Drift authorities. A single wallet operating two Drift sub-accounts (a completely standard pattern — Drift users routinely run multiple numbered sub-accounts under one authority) would produce two distinct `maker_key`/`taker_key` values and pass this check while trading with itself across its own sub-accounts. That's a real, precisely-identified gap in the guard's granularity — but per the methodology's own discipline (falsify the cheapest thing first, don't build further on a candidate until reachability is settled), it wasn't chased into a full exploit analysis, because of what came next.
-
-### 3.3 The reachability check that actually mattered
-
-Before going deeper into the fill-logic trace, checked whether `place_and_make_perp_order` is even wired up in the current build:
-
-```rust
-// programs/drift/src/lib.rs
-#[program]
-pub mod drift {
-    // place_and_make_perp_order (and cancel_orders, modify_order, place_and_take_perp_order,
-    // place_spot_order, and every other trading instruction) — every single `pub fn` in this
-    // module is commented out with `//`, not gated behind a #[cfg] flag.
-}
-```
-
-This alone would be a strong signal, but source inspection of a possibly-stale clone isn't sufficient evidence on its own — so it was checked independently against the live chain. Queried `getSignaturesForAddress` for the real mainnet program ID and pulled the full transaction log of the most recent finalized transaction:
-
-```
-Program dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH invoke [1]
-Program log: AnchorError occurred. Error Code: InstructionFallbackNotFound. Error Number: 101.
-Error Message: Fallback functions are not supported.
-Program dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH failed: custom program error: 0x65
-```
-
-`InstructionFallbackNotFound` is Anchor's own built-in error, thrown when an incoming instruction's discriminator matches nothing registered in the program's dispatcher. That's the exact on-chain symptom of a program whose `#[program]` module has zero active instructions — independently corroborating what the source shows, ruling out "this is just a stale or wrong branch" as an explanation. Every recent transaction against this program is failing this way. The entire trading surface is currently offline — consistent with the post-hack rebrand context and almost certainly a deliberate, temporary state while the team rebuilds and re-audits, rather than an accident.
-
-**Conclusion: the self-trade question is unanswerable in the sense that matters, because there is currently no path to reach it at all.** Not "low severity" — not reachable, full stop, verified against production, today.
+**Conclusion: paused, unverified.** The question was not resolved either way.
 
 ---
 
 ## 4. What this demonstrates
 
-- **Self-correction under evidence, not stubbornness.** The liquidation-timing finding was walked back from "High severity, ready to send" to "retracted" after one document was read that should have been read first. Reporting the retraction with its full trail is more valuable to a reader evaluating judgment than reporting only the findings that survived.
-- **Semantic call-graph analysis, not text search.** Confirming that two functions ~1,300 lines apart in a 4,000+ line file are actually connected — with certainty, via a real call-hierarchy trace — is exactly the kind of question grep gives false confidence about in either direction.
-- **Reachability-first triage.** Before spending further effort deepening a code-level finding, the cheapest possible falsification (is this instruction even callable right now?) was checked first — and it dissolved the entire question. Checking the cheapest disproof before the expensive one is a discipline, not a shortcut.
-- **Live-chain verification as a first-class check.** A source-level observation was independently confirmed against real, current mainnet transaction data before being treated as fact. Code review that stops at the repository is only half the picture on a live protocol.
+- **Labeling conclusions at their actual strength.** A result that was walked back after reading one document is recorded as provisional, not as a verdict, until it has been independently re-checked.
+- **Semantic call-graph analysis, not text search.** Confirming that two distant functions are actually connected is the kind of question grep gives false confidence about in either direction.
+- **Reachability-first triage.** Checking the cheapest possible disproof before the expensive one is a discipline, not a shortcut — provided the check is refreshed before it is relied on.
+- **Live-chain checks are point-in-time.** An on-chain observation is evidence about one moment, not a standing fact.
