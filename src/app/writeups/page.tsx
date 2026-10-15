@@ -1,8 +1,6 @@
-import Link from "next/link";
 import type { Metadata } from "next";
-import { format } from "date-fns";
 import { getAllWriteups } from "@/lib/writeups";
-import { severityClassName } from "@/lib/severity";
+import WriteupRow from "@/components/WriteupRow";
 
 export const metadata: Metadata = {
   title: "Writeups | Security Portfolio",
@@ -28,28 +26,9 @@ export default function WriteupsPage() {
           <div className="px-3 py-6 text-muted/60">-- empty --</div>
         )}
 
-        {writeups.map((w) => {
-          const isDraft = w.status === "Draft";
-          return (
-            <Link
-              key={w.slug}
-              href={`/writeups/${w.slug}`}
-              className={`grid grid-cols-[6rem_1fr_7rem_6rem] gap-4 items-center px-3 py-2 border-b border-muted/10 last:border-b-0 hover:bg-muted/5 ${
-                isDraft ? "opacity-50" : ""
-              }`}
-            >
-              <span className="text-muted">
-                {format(new Date(w.date), "yyyy-MM-dd")}
-              </span>
-              <span className={`truncate ${isDraft ? "text-muted italic" : "text-foreground"}`}>
-                {isDraft && "[DRAFT] "}
-                {w.title}
-              </span>
-              <span className="text-muted truncate">{w.protocol}</span>
-              <span className={severityClassName[w.severity]}>{w.severity}</span>
-            </Link>
-          );
-        })}
+        {writeups.map((w) => (
+          <WriteupRow key={w.slug} w={w} />
+        ))}
       </div>
     </main>
   );

@@ -47,12 +47,19 @@ export default async function WriteupPage({
         <div className="flex flex-wrap gap-x-6 gap-y-1 mt-3 text-muted">
           <span>date: {format(new Date(meta.date), "yyyy-MM-dd")}</span>
           <span>protocol: {meta.protocol}</span>
-          <span>
-            severity:{" "}
-            <span className={severityClassName[meta.severity]}>
-              {meta.severity}
+          {meta.status === "Engagement" ? (
+            <>
+              {meta.chain && <span>chain: {meta.chain}</span>}
+              {meta.scope && <span>scope: {meta.scope}</span>}
+            </>
+          ) : (
+            <span>
+              severity:{" "}
+              <span className={severityClassName[meta.severity]}>
+                {meta.severity}
+              </span>
             </span>
-          </span>
+          )}
           <span>
             status:{" "}
             <span className={statusClassName[meta.status]}>

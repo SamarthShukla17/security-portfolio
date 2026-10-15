@@ -21,4 +21,5 @@ export const statusClassName: Record<WriteupMeta["status"], string> = {
   Draft: "text-muted/60",
   "Paused (Unverified)": "text-muted",
   Methodology: "text-foreground",
+  Engagement: "text-foreground",
 };

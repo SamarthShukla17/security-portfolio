@@ -11,7 +11,7 @@ Independent Solana/Rust security research — audit trails and disclosure writeu
 
 ## About This Repo
 
-This is the source for the portfolio site itself — a Next.js static export, deployed to both Vercel and GitHub Pages. Writeups are a file-based CMS: every entry in [`writeups/`](writeups/) is a Markdown file with YAML frontmatter (`title`, `date`, `protocol`, `severity`, `status`, `summary`), rendered through [`app/writeups/`](src/app/writeups/) and indexed by [`lib/writeups.ts`](src/lib/writeups.ts).
+This is the source for the portfolio site itself — a Next.js static export, deployed to both Vercel and GitHub Pages. Writeups are a file-based CMS: every entry in [`writeups/`](writeups/) is a Markdown file with YAML frontmatter (`title`, `date`, `protocol`, `severity`, `status`, `summary`; engagement entries add `chain`, `scope`, `highlights`), rendered through [`app/writeups/`](src/app/writeups/) and indexed by [`lib/writeups.ts`](src/lib/writeups.ts).
 
 ### Development
 
