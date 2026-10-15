@@ -26,8 +26,14 @@ export interface WriteupMeta {
     | "Negative (Clean Audit)"
     | "Draft"
     | "Paused (Unverified)"
-    | "Methodology";
+    | "Methodology"
+    | "Engagement";
   summary: string;
+  // Engagement entries describe scope and method only; these replace the
+  // severity column so no outcome is implied.
+  chain?: string;
+  scope?: string;
+  highlights?: string[];
 }
 
 function readWriteupFile(slug: string) {
@@ -45,6 +51,9 @@ function toMeta(slug: string, data: Record<string, unknown>): WriteupMeta {
     severity: data.severity as WriteupMeta["severity"],
     status: data.status as WriteupMeta["status"],
     summary: data.summary as string,
+    chain: data.chain as string | undefined,
+    scope: data.scope as string | undefined,
+    highlights: data.highlights as string[] | undefined,
   };
 }
 
