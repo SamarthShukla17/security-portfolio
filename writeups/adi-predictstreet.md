@@ -225,7 +225,7 @@ Three killed hypotheses, picked to show the reasoning. Each one was disproven, a
 - **23 hypotheses** tested across **3 passes** on **~3,603 nSLOC**
 - 63-invariant ledger, 14 leads, and an 8-class defense catalog plus portable checks, all reusable on future targets
 
-A clean negative on a well-defended codebase is a finding in itself: it produces a defense catalog that compounds across every future engagement.
+No high-impact findings on a well-defended codebase is a finding in itself: it produces a defense catalog that compounds across every future engagement.
 
 ---
 
