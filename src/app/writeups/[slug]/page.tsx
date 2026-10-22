@@ -52,7 +52,7 @@ export default async function WriteupPage({
               {meta.chain && <span>chain: {meta.chain}</span>}
               {meta.scope && <span>scope: {meta.scope}</span>}
             </>
-          ) : (
+          ) : meta.status === "Methodology" ? null : (
             <span>
               severity:{" "}
               <span className={severityClassName[meta.severity]}>

@@ -23,6 +23,8 @@ export default function WriteupRow({ w }: { w: WriteupMeta }) {
       <span className="text-muted truncate">{w.protocol}</span>
       {isEngagement ? (
         <span className="text-muted/50">engagement</span>
+      ) : w.status === "Methodology" ? (
+        <span className="text-muted/50">methodology</span>
       ) : (
         <span className={severityClassName[w.severity]}>{w.severity}</span>
       )}
