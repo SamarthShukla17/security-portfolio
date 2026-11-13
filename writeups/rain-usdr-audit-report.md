@@ -4,6 +4,7 @@ date: "2026-11-05"
 protocol: "Rain Protocol (USDR)"
 severity: "High"
 status: "Confirmed"
+pdf: "/reports/RAIN-USDR_Smart_Contract_Audit_Report.pdf"
 summary: "My findings from the RAIN-USDR audit contest on HackenProof (September 2026): four High and one Medium, each rated by triage and reproduced with an executed Foundry proof of concept on the pinned scope commit, plus one report I narrowed to Informative myself, and why."
 ---
 

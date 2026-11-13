@@ -38,6 +38,7 @@ export default async function WriteupPage({
     notFound();
   }
   const { meta, contentHtml } = writeup;
+  const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-12 text-sm">
@@ -58,6 +59,17 @@ export default async function WriteupPage({
               <span className={severityClassName[meta.severity]}>
                 {meta.severity}
               </span>
+            </span>
+          )}
+          {meta.pdf && (
+            <span>
+              pdf:{" "}
+              <a
+                href={`${base}${meta.pdf}`}
+                className="text-foreground hover:underline underline-offset-4"
+              >
+                download
+              </a>
             </span>
           )}
           <span>

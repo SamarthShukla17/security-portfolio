@@ -45,7 +45,8 @@
   "platforms": [
     {
       "name": "HackenProof",
-      "profile": "https://hackenproof.com/hackers/Samarth28"
+      "profile": "https://hackenproof.com/hackers/Samarth28",
+      "report": "/reports/RAIN-USDR_Smart_Contract_Audit_Report.pdf"
     }
   ],
   "confirmedUndisclosed": {
@@ -64,5 +65,15 @@
       "source": "HackenProof bug bounty",
       "state": "triaged"
     }
-  }
+  },
+  "practice": [
+    {
+      "name": "Exploit Challenge (SCH CTF Arena)",
+      "kind": "Smart-contract CTF training",
+      "rank": 7,
+      "solved": 24,
+      "asOf": "2026-11-13",
+      "profile": "https://smartcontractshacking.com/tools/web3-ctf-challenges/players/1rdvaelMSngb"
+    }
+  ]
 }

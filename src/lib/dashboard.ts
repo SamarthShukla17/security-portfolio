@@ -14,6 +14,7 @@ export interface DashboardFinding {
 export interface DashboardPlatform {
   name: string;
   profile: string;
+  report?: string;
 }
 
 export interface UndisclosedSeverityCount {
@@ -21,7 +22,17 @@ export interface UndisclosedSeverityCount {
   count: number;
 }
 
+export interface PracticeEntry {
+  name: string;
+  kind: string;
+  rank: number;
+  solved: number;
+  asOf: string;
+  profile: string;
+}
+
 const findings = data.findings as DashboardFinding[];
+const practice = data.practice as PracticeEntry[];
 const undisclosed = data.confirmedUndisclosed as {
   severityKnown: UndisclosedSeverityCount[];
   severityNotDisclosed: { count: number; source: string; state: string };
@@ -37,6 +48,7 @@ export const dashboard = {
   updated: data.updated,
   findings,
   platforms,
+  practice,
   // Counts only, by design: no program names or details until cleared.
   confirmedUndisclosed: {
     severityKnown: undisclosed.severityKnown,

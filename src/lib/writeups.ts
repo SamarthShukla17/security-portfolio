@@ -34,6 +34,7 @@ export interface WriteupMeta {
   chain?: string;
   scope?: string;
   highlights?: string[];
+  pdf?: string;
 }
 
 function readWriteupFile(slug: string) {
@@ -54,6 +55,7 @@ function toMeta(slug: string, data: Record<string, unknown>): WriteupMeta {
     chain: data.chain as string | undefined,
     scope: data.scope as string | undefined,
     highlights: data.highlights as string[] | undefined,
+    pdf: data.pdf as string | undefined,
   };
 }
 

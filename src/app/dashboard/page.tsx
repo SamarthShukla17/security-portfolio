@@ -9,7 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default function DashboardPage() {
-  const { totals, findings, platforms, updated, confirmedUndisclosed: cu } = dashboard;
+  const { totals, findings, platforms, practice, updated, confirmedUndisclosed: cu } = dashboard;
+  const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   const stats: [number, string][] = [
     [totals.findings, "disclosed findings"],
     [totals.high, "high"],
@@ -96,9 +97,38 @@ export default function DashboardPage() {
               >
                 → public profile
               </a>
+              {p.report && (
+                <a
+                  href={`${base}${p.report}`}
+                  className="inline-block mt-2 ml-4 text-muted hover:text-foreground hover:underline underline-offset-4"
+                >
+                  → full report (PDF)
+                </a>
+              )}
             </li>
           );
         })}
+      </ul>
+
+      <p className="text-muted mt-12 mb-4">$ ls practice/</p>
+      <ul className="space-y-3">
+        {practice.map((e) => (
+          <li key={e.name} className="border border-muted/20 px-4 py-3">
+            <p className="text-foreground font-medium">{e.name}</p>
+            <p className="text-muted mt-1">
+              {e.kind} · rank #{e.rank} · {e.solved} solved
+            </p>
+            <p className="text-xs text-muted/60 mt-1">as of {e.asOf}; rank changes as the board moves</p>
+            <a
+              href={e.profile}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-2 text-muted hover:text-foreground hover:underline underline-offset-4"
+            >
+              → public profile
+            </a>
+          </li>
+        ))}
       </ul>
 
       <p className="mt-10 text-xs text-muted/60 leading-relaxed">

@@ -10,6 +10,10 @@ const nextConfig = {
   output: "export",
   basePath: isGithubPages ? "/security-portfolio" : "",
   assetPrefix: isGithubPages ? "/security-portfolio/" : "",
+  env: {
+    // Lets raw <a> links to files in public/ pick up the GitHub Pages basePath.
+    NEXT_PUBLIC_BASE_PATH: isGithubPages ? "/security-portfolio" : "",
+  },
   images: {
     unoptimized: true,
   },
