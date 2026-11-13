@@ -137,3 +137,11 @@
   color: var(--muted);
   margin: 0 0 1em 0;
 }
+
+.writeup-content {
+  overflow-wrap: break-word;
+}
+
+.writeup-content :not(pre) > code {
+  overflow-wrap: anywhere;
+}

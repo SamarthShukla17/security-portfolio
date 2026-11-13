@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Bio from "@/components/Bio";
 import EngineeringSection from "@/components/EngineeringSection";
+import DashboardSummary from "@/components/DashboardSummary";
 import { getAllWriteups } from "@/lib/writeups";
 import WriteupRow from "@/components/WriteupRow";
 
@@ -10,6 +11,8 @@ export default function Home() {
   return (
     <main>
       <Bio />
+
+      <DashboardSummary />
 
       <section className="max-w-3xl mx-auto px-4 py-16 border-t border-muted/20 text-sm">
         <div className="flex items-baseline justify-between mb-6">

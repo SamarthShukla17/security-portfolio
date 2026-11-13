@@ -1,0 +1,51 @@
+{
+  "updated": "2026-11-13",
+  "findings": [
+    {
+      "id": "RAINUSDR-1746",
+      "title": "Honest in-cap redemption breaches the solvency invariant",
+      "severity": "High",
+      "platform": "HackenProof",
+      "program": "RAIN-USDR audit contest",
+      "slug": "rain-usdr-audit-report"
+    },
+    {
+      "id": "RAINUSDR-1739",
+      "title": "Same-transaction collateral top-up/withdraw bypasses the redemption cap",
+      "severity": "High",
+      "platform": "HackenProof",
+      "program": "RAIN-USDR audit contest",
+      "slug": "rain-usdr-audit-report"
+    },
+    {
+      "id": "RAINUSDR-1676",
+      "title": "worstCaseLoss() never reads vice after a permissionless bark()",
+      "severity": "High",
+      "platform": "HackenProof",
+      "program": "RAIN-USDR audit contest",
+      "slug": "rain-usdr-audit-report"
+    },
+    {
+      "id": "RAINUSDR-1668",
+      "title": "End.skip() has no post-flow guard; call-ordering strands ~53% of a redemption pot",
+      "severity": "High",
+      "platform": "HackenProof",
+      "program": "RAIN-USDR audit contest",
+      "slug": "rain-usdr-audit-report"
+    },
+    {
+      "id": "RAINUSDR-1303",
+      "title": "BalanceSheet's surplus floor can permanently block End.thaw()",
+      "severity": "Medium",
+      "platform": "HackenProof",
+      "program": "RAIN-USDR audit contest",
+      "slug": "rain-usdr-audit-report"
+    }
+  ],
+  "platforms": [
+    {
+      "name": "HackenProof",
+      "profile": "https://hackenproof.com/hackers/Samarth28"
+    }
+  ]
+}

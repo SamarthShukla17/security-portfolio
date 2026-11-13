@@ -15,10 +15,10 @@ export default function WriteupsPage() {
       <p className="text-muted mb-6">$ ls writeups/</p>
 
       <div className="border border-muted/20">
-        <div className="grid grid-cols-[6rem_1fr_7rem_6rem] gap-4 px-3 py-2 text-xs uppercase tracking-wide text-muted/60 border-b border-muted/20">
+        <div className="grid grid-cols-[5.5rem_minmax(0,1fr)_auto] sm:grid-cols-[6rem_1fr_7rem_6rem] gap-4 px-3 py-2 text-xs uppercase tracking-wide text-muted/60 border-b border-muted/20">
           <span>date</span>
           <span>title</span>
-          <span>protocol</span>
+          <span className="hidden sm:block">protocol</span>
           <span>severity</span>
         </div>
 

@@ -9,7 +9,7 @@ export default function WriteupRow({ w }: { w: WriteupMeta }) {
   return (
     <Link
       href={`/writeups/${w.slug}`}
-      className={`grid grid-cols-[6rem_1fr_7rem_6rem] gap-x-4 gap-y-1 items-center px-3 py-2 border-b border-muted/10 last:border-b-0 hover:bg-muted/5 ${
+      className={`grid grid-cols-[5.5rem_minmax(0,1fr)_auto] sm:grid-cols-[6rem_1fr_7rem_6rem] gap-x-4 gap-y-1 items-center px-3 py-2 border-b border-muted/10 last:border-b-0 hover:bg-muted/5 ${
         isDraft ? "opacity-50" : ""
       }`}
     >
@@ -20,7 +20,7 @@ export default function WriteupRow({ w }: { w: WriteupMeta }) {
         {isDraft && "[DRAFT] "}
         {w.title}
       </span>
-      <span className="text-muted truncate">{w.protocol}</span>
+      <span className="text-muted truncate hidden sm:block">{w.protocol}</span>
       {isEngagement ? (
         <span className="text-muted/50">engagement</span>
       ) : w.status === "Methodology" ? (
@@ -29,7 +29,7 @@ export default function WriteupRow({ w }: { w: WriteupMeta }) {
         <span className={severityClassName[w.severity]}>{w.severity}</span>
       )}
       {isEngagement && (
-        <span className="col-start-2 col-span-3 text-xs text-muted/60">
+        <span className="col-start-2 col-span-2 sm:col-span-3 text-xs text-muted/60">
           {[w.chain, w.scope, ...(w.highlights ?? [])]
             .filter(Boolean)
             .map((item) => `[${item}]`)

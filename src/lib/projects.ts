@@ -54,4 +54,17 @@ export const projects: Project[] = [
     stack: ["TypeScript", "Solana", "Jupiter API"],
     sourceUrl: "https://github.com/SamarthShukla17/solana-microstructure-note",
   },
+  {
+    slug: "hound",
+    name: "Hound",
+    description:
+      "An open-source, model-agnostic multi-agent harness for smart-contract audits, built around " +
+      "refuting its own candidates rather than generating more of them. Hunters fan out per " +
+      "attack lens, a citation gate checks every claim against real source lines, and two judges " +
+      "from different model families review what survives. A sibling package, Bloodhound, only lets a " +
+      "finding stand if a compiled Foundry proof of concept demonstrates it and a control variant " +
+      "with the attack removed does not. Cloud-only by design; see the writeup for its limits.",
+    stack: ["Python", "Foundry", "Echidna/Medusa", "LLM agents"],
+    sourceUrl: "https://github.com/SamarthShukla17/hound",
+  },
 ];
