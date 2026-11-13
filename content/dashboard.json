@@ -47,5 +47,22 @@
       "name": "HackenProof",
       "profile": "https://hackenproof.com/hackers/Samarth28"
     }
-  ]
+  ],
+  "confirmedUndisclosed": {
+    "severityKnown": [
+      {
+        "severity": "Medium",
+        "count": 6
+      },
+      {
+        "severity": "Informational",
+        "count": 1
+      }
+    ],
+    "severityNotDisclosed": {
+      "count": 2,
+      "source": "HackenProof bug bounty",
+      "state": "triaged"
+    }
+  }
 }

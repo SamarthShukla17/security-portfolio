@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default function DashboardPage() {
-  const { totals, findings, platforms, updated } = dashboard;
+  const { totals, findings, platforms, updated, confirmedUndisclosed: cu } = dashboard;
   const stats: [number, string][] = [
-    [totals.findings, "findings"],
+    [totals.findings, "disclosed findings"],
     [totals.high, "high"],
     [totals.medium, "medium"],
     [totals.platforms, totals.platforms === 1 ? "platform" : "platforms"],
@@ -51,6 +51,32 @@ export default function DashboardPage() {
         ))}
       </div>
 
+      <p className="text-muted mt-12 mb-1">$ ls confirmed/</p>
+      <p className="text-xs text-muted/60 mb-4">confirmed, not yet disclosed</p>
+
+      <p className="text-xs uppercase tracking-wide text-muted/60 mb-2">severity confirmed</p>
+      <div className="grid grid-cols-2 border border-muted/20">
+        {cu.severityKnown.map((r) => (
+          <div key={r.severity} className="px-4 py-4 border-r border-muted/20 last:border-r-0">
+            <p className="text-2xl text-foreground">{r.count}</p>
+            <p className="text-xs text-muted/70 mt-1">{r.severity.toLowerCase()}</p>
+          </div>
+        ))}
+      </div>
+
+      <p className="text-xs uppercase tracking-wide text-muted/60 mt-6 mb-2">severity not disclosed</p>
+      <div className="border border-muted/20 px-4 py-4">
+        <p className="text-2xl text-foreground">{cu.severityNotDisclosed.count}</p>
+        <p className="text-xs text-muted/70 mt-1">
+          {cu.severityNotDisclosed.state} · {cu.severityNotDisclosed.source}
+        </p>
+      </div>
+
+      <p className="mt-3 text-xs text-muted/60 leading-relaxed">
+        Counts only. No programs or details are published until cleared. Severities are as
+        confirmed so far and can change until final judging.
+      </p>
+
       <p className="text-muted mt-12 mb-4">$ ls platforms/</p>
       <ul className="space-y-3">
         {platforms.map((p) => {
@@ -76,8 +102,8 @@ export default function DashboardPage() {
       </ul>
 
       <p className="mt-10 text-xs text-muted/60 leading-relaxed">
-        Only findings published with the program&apos;s permission are counted.
-        Severity is as rated by the platform&apos;s triage, not self-assessed.
+        The disclosed findings above are the ones published with the program&apos;s
+        permission. Their severity is as rated by the platform&apos;s triage, not self-assessed.
       </p>
     </main>
   );
