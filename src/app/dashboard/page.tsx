@@ -21,20 +21,20 @@ export default function DashboardPage() {
   return (
     <main className="max-w-3xl mx-auto px-4 py-12 text-sm">
       <p className="text-muted mb-1">$ cat dashboard</p>
-      <p className="text-xs text-muted/60 mb-6">updated {updated}</p>
+      <p className="text-xs text-muted/75 mb-6">updated {updated}</p>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 border border-muted/20">
         {stats.map(([n, label]) => (
           <div key={label} className="px-4 py-4 border-b sm:border-b-0 border-r border-muted/20 last:border-r-0">
             <p className="text-2xl text-foreground">{n}</p>
-            <p className="text-xs text-muted/70 mt-1">{label}</p>
+            <p className="text-xs text-muted/80 mt-1">{label}</p>
           </div>
         ))}
       </div>
 
       <p className="text-muted mt-12 mb-4">$ ls findings/</p>
       <div className="border border-muted/20">
-        <div className="hidden sm:grid grid-cols-[8.5rem_minmax(0,1fr)_4.5rem] gap-4 px-3 py-2 text-xs uppercase tracking-wide text-muted/60 border-b border-muted/20">
+        <div className="hidden sm:grid grid-cols-[8.5rem_minmax(0,1fr)_4.5rem] gap-4 px-3 py-2 text-xs uppercase tracking-wide text-muted/75 border-b border-muted/20">
           <span>id</span>
           <span>title</span>
           <span>severity</span>
@@ -43,7 +43,7 @@ export default function DashboardPage() {
           <Link
             key={f.id}
             href={`/writeups/${f.slug}`}
-            className="grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[8.5rem_minmax(0,1fr)_4.5rem] gap-x-4 gap-y-1 items-baseline px-3 py-2 border-b border-muted/10 last:border-b-0 hover:bg-muted/5"
+            className="plain grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[8.5rem_minmax(0,1fr)_4.5rem] gap-x-4 gap-y-1 items-baseline px-3 py-2 border-b border-muted/10 last:border-b-0 hover:bg-muted/5"
           >
             <span className="text-muted order-1">{f.id}</span>
             <span className="text-foreground order-3 col-span-2 sm:col-span-1 sm:order-2 break-words">{f.title}</span>
@@ -53,27 +53,27 @@ export default function DashboardPage() {
       </div>
 
       <p className="text-muted mt-12 mb-1">$ ls confirmed/</p>
-      <p className="text-xs text-muted/60 mb-4">confirmed, not yet disclosed</p>
+      <p className="text-xs text-muted/75 mb-4">confirmed, not yet disclosed</p>
 
-      <p className="text-xs uppercase tracking-wide text-muted/60 mb-2">severity confirmed</p>
+      <p className="text-xs uppercase tracking-wide text-muted/75 mb-2">severity confirmed</p>
       <div className="grid grid-cols-2 border border-muted/20">
         {cu.severityKnown.map((r) => (
           <div key={r.severity} className="px-4 py-4 border-r border-muted/20 last:border-r-0">
             <p className="text-2xl text-foreground">{r.count}</p>
-            <p className="text-xs text-muted/70 mt-1">{r.severity.toLowerCase()}</p>
+            <p className="text-xs text-muted/80 mt-1">{r.severity.toLowerCase()}</p>
           </div>
         ))}
       </div>
 
-      <p className="text-xs uppercase tracking-wide text-muted/60 mt-6 mb-2">severity not disclosed</p>
+      <p className="text-xs uppercase tracking-wide text-muted/75 mt-6 mb-2">severity not disclosed</p>
       <div className="border border-muted/20 px-4 py-4">
         <p className="text-2xl text-foreground">{cu.severityNotDisclosed.count}</p>
-        <p className="text-xs text-muted/70 mt-1">
+        <p className="text-xs text-muted/80 mt-1">
           {cu.severityNotDisclosed.state} · {cu.severityNotDisclosed.source}
         </p>
       </div>
 
-      <p className="mt-3 text-xs text-muted/60 leading-relaxed">
+      <p className="mt-3 text-xs text-muted/75 leading-relaxed">
         Counts only. No programs or details are published until cleared. Severities are as
         confirmed so far and can change until final judging.
       </p>
@@ -93,14 +93,14 @@ export default function DashboardPage() {
                 href={p.profile}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block mt-2 text-muted hover:text-foreground hover:underline underline-offset-4"
+                className="inline-block mt-2"
               >
                 → public profile
               </a>
               {p.report && (
                 <a
                   href={`${base}${p.report}`}
-                  className="inline-block mt-2 ml-4 text-muted hover:text-foreground hover:underline underline-offset-4"
+                  className="inline-block mt-2 ml-4"
                 >
                   → full report (PDF)
                 </a>
@@ -118,12 +118,12 @@ export default function DashboardPage() {
             <p className="text-muted mt-1">
               {e.kind} · rank #{e.rank} · {e.solved} solved
             </p>
-            <p className="text-xs text-muted/60 mt-1">as of {e.asOf}; rank changes as the board moves</p>
+            <p className="text-xs text-muted/75 mt-1">as of {e.asOf}; rank changes as the board moves</p>
             <a
               href={e.profile}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block mt-2 text-muted hover:text-foreground hover:underline underline-offset-4"
+              className="inline-block mt-2"
             >
               → public profile
             </a>
@@ -131,7 +131,7 @@ export default function DashboardPage() {
         ))}
       </ul>
 
-      <p className="mt-10 text-xs text-muted/60 leading-relaxed">
+      <p className="mt-10 text-xs text-muted/75 leading-relaxed">
         The disclosed findings above are the ones published with the program&apos;s
         permission. Their severity is as rated by the platform&apos;s triage, not self-assessed.
       </p>

@@ -5,10 +5,10 @@ export const severityClassName: Record<WriteupMeta["severity"], string> = {
   "Critical (disputed)": "text-foreground font-medium",
   High: "text-foreground",
   Medium: "text-muted",
-  Low: "text-muted/70",
-  Informational: "text-muted/50",
-  "N/A": "text-muted/50",
-  TBD: "text-muted/40 italic",
+  Low: "text-muted/80",
+  Informational: "text-muted/75",
+  "N/A": "text-muted/75",
+  TBD: "text-muted italic",
 };
 
 // Status reflects disclosure outcome, not technical severity — tonal
@@ -18,7 +18,7 @@ export const statusClassName: Record<WriteupMeta["status"], string> = {
   Confirmed: "text-foreground font-medium",
   Disputed: "text-muted",
   "Negative (Clean Audit)": "text-muted",
-  Draft: "text-muted/60",
+  Draft: "text-muted/75",
   "Paused (Unverified)": "text-muted",
   Methodology: "text-foreground",
   Engagement: "text-foreground",

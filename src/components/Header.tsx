@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
 const HANDLE = "samarth@security:~$";
 
@@ -11,29 +12,25 @@ const navLinks = [
 export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-muted/20">
-      <nav className="max-w-3xl mx-auto px-4 min-h-14 py-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
-        <Link
-          href="/"
-          className="text-foreground no-underline hover:underline underline-offset-4"
-        >
+      <nav className="max-w-3xl mx-auto px-4 min-h-14 py-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+        <Link href="/" className="plain order-1 mr-auto">
           {HANDLE}
         </Link>
-        <div className="flex flex-wrap gap-x-4 gap-y-1 sm:gap-x-6">
+        <a
+          href="mailto:samarthofficial52@gmail.com"
+          className="cta cta-sm order-2 sm:order-3"
+        >
+          Hire for Audit
+        </a>
+        <div className="order-3 sm:order-2 flex gap-x-4 sm:gap-x-6">
           {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-muted no-underline hover:text-foreground hover:underline underline-offset-4"
-            >
+            <Link key={link.href} href={link.href}>
               {link.label}
             </Link>
           ))}
-          <a
-            href="mailto:samarthofficial52@gmail.com"
-            className="text-foreground no-underline hover:underline underline-offset-4"
-          >
-            Hire for Audit
-          </a>
+        </div>
+        <div className="order-4 ml-auto sm:ml-0">
+          <ThemeToggle />
         </div>
       </nav>
     </header>

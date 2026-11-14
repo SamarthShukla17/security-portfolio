@@ -17,7 +17,7 @@ export default function EngineeringSection() {
               {project.description}
             </p>
 
-            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted/60">
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted/75">
               {project.stack.map((tech) => (
                 <span key={tech}>[{tech}]</span>
               ))}
@@ -28,9 +28,7 @@ export default function EngineeringSection() {
                 <a
                   href={project.liveUrl}
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline underline-offset-4"
-                >
+                  rel="noopener noreferrer">
                   → live
                 </a>
               )}
@@ -38,9 +36,7 @@ export default function EngineeringSection() {
                 <a
                   href={project.sourceUrl}
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline underline-offset-4"
-                >
+                  rel="noopener noreferrer">
                   → source
                 </a>
               )}

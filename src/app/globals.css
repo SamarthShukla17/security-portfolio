@@ -36,34 +36,70 @@
 
 @layer utilities {
   :root {
-    --background: #1a1c1e;
-    --surface: #222222;
-    --foreground: #d4d4c4;
-    --muted: #b0b0b0;
+    --background: #f7f4ef;
+    --surface: #efebe4;
+    --foreground: #1c1917;
+    --muted: #44403c;
 
     /* RGB channels for the same colors, used by Tailwind's opacity-modifier
-     utilities (e.g. text-muted/50), which require rgb(var(...) / <alpha-value>). */
-    --background-rgb: 26 28 30;
-    --surface-rgb: 34 34 34;
-    --foreground-rgb: 212 212 196;
-    --muted-rgb: 176 176 176;
+     utilities (e.g. text-muted/75), which require rgb(var(...) / <alpha-value>). */
+    --background-rgb: 247 244 239;
+    --surface-rgb: 239 235 228;
+    --foreground-rgb: 28 25 23;
+    --muted-rgb: 68 64 60;
+  }
+
+  /* dark: warm near-black paper */
+  [data-theme="dark"] {
+    --background: #1a1917;
+    --surface: #23211e;
+    --foreground: #e7e5e4;
+    --muted: #b0aaa4;
+
+    --background-rgb: 26 25 23;
+    --surface-rgb: 35 33 30;
+    --foreground-rgb: 231 229 228;
+    --muted-rgb: 176 170 164;
   }
 
   html {
+    color-scheme: light;
+  }
+
+  html[data-theme="dark"] {
     color-scheme: dark;
   }
 
   body {
     color: var(--foreground);
-    background: var(--background);
+    background-color: var(--background);
+    background-attachment: fixed;
     font-family:
-      var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      var(--font-plex), var(--font-mono), ui-monospace, SFMono-Regular, Menlo,
+      Consolas, monospace;
+    font-weight: 400;
+    line-height: 1.6;
     letter-spacing: -0.01em;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
-  a {
-    color: inherit;
-    text-decoration: none;
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 500;
+    color: var(--foreground);
+  }
+
+  /* optional subtle paper texture */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.4;
   }
 
   ::selection {
@@ -95,11 +131,6 @@
 .writeup-content p {
   margin-bottom: 1em;
   line-height: 1.7;
-}
-
-.writeup-content a {
-  text-decoration: underline;
-  text-underline-offset: 2px;
 }
 
 .writeup-content ul,
@@ -145,3 +176,241 @@
 .writeup-content :not(pre) > code {
   overflow-wrap: anywhere;
 }
+
+/* ---------- links & CTAs ---------- */
+:root {
+  --link: #3d4a5c;
+  --link-hover: #1c1917;
+  --link-underline: #a8a29e;
+  --cta-bg: #1c1917;
+  --cta-fg: #f7f4ef;
+  --cta-hover: #3f3a36;
+  --cta2-fg: #1c1917;
+  --cta2-border: #d6d3d1;
+  --cta2-hover-bg: #f0ede8;
+}
+
+[data-theme="dark"] {
+  --link: #a8a29e;
+  --link-hover: #e7e5e4;
+  --link-underline: #57534e;
+  --cta-bg: #e7e5e4;
+  --cta-fg: #1a1917;
+  --cta-hover: #d6d3d1;
+  --cta2-fg: #e7e5e4;
+  --cta2-border: #44403c;
+  --cta2-hover-bg: #23211e;
+}
+
+/* the paper grain only suits the light theme */
+[data-theme="dark"] body::before {
+  display: none;
+}
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--link-underline);
+}
+
+a:hover {
+  color: var(--link-hover);
+  text-decoration-color: var(--link-hover);
+}
+
+/* opt-out: whole-row links and the brand handle */
+a.plain,
+a.plain:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cta,
+.cta-secondary,
+button,
+.btn {
+  display: inline-block;
+  font-family: inherit;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  padding: 0.6rem 1.25rem;
+  border-radius: 2px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.cta,
+button,
+.btn {
+  background: var(--cta-bg);
+  color: var(--cta-fg);
+  border: none;
+}
+
+/* compact variant for the header */
+.cta-sm {
+  padding: 0.4rem 0.95rem;
+  font-size: 0.85rem;
+}
+
+a.cta,
+a.cta:hover,
+a.btn,
+a.btn:hover {
+  color: var(--cta-fg);
+  text-decoration: none;
+}
+
+.cta:hover,
+button:hover,
+.btn:hover {
+  background: var(--cta-hover);
+}
+
+.cta-secondary {
+  background: transparent;
+  color: var(--cta2-fg);
+  border: 1px solid var(--cta2-border);
+}
+
+a.cta-secondary,
+a.cta-secondary:hover {
+  color: var(--cta2-fg);
+  text-decoration: none;
+}
+
+.cta-secondary:hover {
+  border-color: var(--cta2-fg);
+  background: var(--cta2-hover-bg);
+}
+
+/* quiet mono theme switch: [ light ] / [ dark ] (must not pick up the CTA button styles) */
+.theme-toggle,
+.theme-toggle:hover {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.875rem;
+  letter-spacing: 0;
+  line-height: inherit;
+  cursor: pointer;
+  white-space: pre;
+}
+
+.theme-toggle:hover {
+  color: var(--foreground);
+}
+
+/* Tech card (hero, right side) — quiet, paper-matching */
+.tech-card {
+  background: #f0ede8;
+  border: 1px solid #e7e5e4;
+  padding: 1.25rem 1.5rem 0.5rem;
+  width: 100%;
+  max-width: 230px;
+  flex: none;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #1c1917;
+}
+.tech-card h3 {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem 0;
+  color: #57534e;
+}
+.tech-card p { margin: 0 0 1rem 0; }
+[data-theme="dark"] .tech-card { background: #242220; border-color: #3f3a36; color: #e7e5e4; }
+[data-theme="dark"] .tech-card h3 { color: #a8a29e; }
+
+/* Pen-and-ink temple, fixed behind everything. Grain stays on body::before. */
+:root { --bg-image-opacity: 0.13; }
+[data-theme="dark"] { --bg-image-opacity: 0.14; }
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: var(--temple-url);
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  opacity: var(--bg-image-opacity);
+  pointer-events: none;
+  z-index: -1;
+  filter: url(#ink-light);
+  transition: opacity 0.2s ease;
+}
+/* Landscape windows: `cover` would enlarge the scene past 2x and push the
+   roofline behind the hero text. Make the layer exactly the image's box
+   (full height, natural aspect) in the bottom-right corner. The ink filter
+   turns transparent pixels opaque, so the layer must have none. */
+html::before { content: none; }
+@media (min-aspect-ratio: 1/1) {
+  /* Continue the landscape to the window's left edge: a mirrored strip of the
+     image's own left bank, hills and water, a long non-repeating strip built from varied windows of that bank. */
+  html::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: calc(100vh * 784 / 1090);
+    background-image: var(--edge-url);
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    background-position: right bottom;
+    opacity: var(--bg-image-opacity);
+    pointer-events: none;
+    z-index: -1;
+    filter: url(#ink-light);
+    transition: opacity 0.2s ease;
+  }
+  html[data-theme="dark"]::before { filter: url(#ink-dark); }
+  body::after {
+    inset: auto 0 0 auto;
+    height: 100%;
+    aspect-ratio: 784 / 1090;
+    background-size: 100% 100%;
+    background-position: right bottom;
+  }
+}
+
+/* ink-only layer, light ink on the dark page */
+[data-theme="dark"] body::after { filter: url(#ink-dark); }
+
+/* Soften the sketch behind text, only where there is text. Each text block
+   gets a feathered backdrop-blur pad; the mask fades its edges so no box shows. */
+main :is(p, h1, h2, h3, h4, li, dt, dd),
+footer p {
+  position: relative;
+  isolation: isolate;
+}
+main :is(p, h1, h2, h3, h4, li, dt, dd)::before,
+footer p::before {
+  content: "";
+  position: absolute;
+  inset: -0.5em -1.1em;
+  z-index: -1;
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 1em, #000 calc(100% - 1em), transparent),
+    linear-gradient(to bottom, transparent, #000 0.5em, #000 calc(100% - 0.5em), transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 1em, #000 calc(100% - 1em), transparent),
+    linear-gradient(to bottom, transparent, #000 0.5em, #000 calc(100% - 0.5em), transparent);
+  mask-composite: intersect;
+}
+/* cards with their own opaque background don't need it */
+.tech-card :is(p, h3)::before { display: none; }

@@ -12,7 +12,7 @@ export default function DashboardSummary() {
     <section className="max-w-3xl mx-auto px-4 py-16 border-t border-muted/20 text-sm">
       <div className="flex items-baseline justify-between mb-6">
         <p className="text-muted">$ cat dashboard</p>
-        <Link href="/dashboard" className="text-muted hover:text-foreground hover:underline underline-offset-4">
+        <Link href="/dashboard">
           full dashboard →
         </Link>
       </div>
@@ -20,11 +20,11 @@ export default function DashboardSummary() {
         {stats.map(([n, label]) => (
           <div key={label} className="px-4 py-4 border-r border-muted/20 last:border-r-0">
             <p className="text-2xl text-foreground">{n}</p>
-            <p className="text-xs text-muted/70 mt-1">{label}</p>
+            <p className="text-xs text-muted/80 mt-1">{label}</p>
           </div>
         ))}
       </div>
-      <p className="mt-3 text-xs text-muted/60">
+      <p className="mt-3 text-xs text-muted/75">
         Published with the program&apos;s permission. Source: HackenProof.
       </p>
     </section>
