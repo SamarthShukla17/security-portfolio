@@ -412,5 +412,8 @@ footer p::before {
     linear-gradient(to bottom, transparent, #000 0.5em, #000 calc(100% - 0.5em), transparent);
   mask-composite: intersect;
 }
+/* The pads reach 1.1em past each text block; never let that create a horizontal scrollbar. */
+body { overflow-x: clip; }
+
 /* cards with their own opaque background don't need it */
 .tech-card :is(p, h3)::before { display: none; }

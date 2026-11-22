@@ -116,7 +116,7 @@ export default function DashboardPage() {
           <li key={e.name} className="border border-muted/20 px-4 py-3">
             <p className="text-foreground font-medium">{e.name}</p>
             <p className="text-muted mt-1">
-              {e.kind} · rank #{e.rank} · {e.solved} solved
+              {e.kind} · rank #{e.rank}{e.players ? ` of ${e.players}` : ""}{e.title ? ` (${e.title})` : ""} · {e.solved}{e.total ? `/${e.total}` : ""} solved
             </p>
             <p className="text-xs text-muted/75 mt-1">as of {e.asOf}; rank changes as the board moves</p>
             <a

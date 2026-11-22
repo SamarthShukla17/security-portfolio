@@ -68,12 +68,16 @@
   },
   "practice": [
     {
-      "name": "Exploit Challenge (SCH CTF Arena)",
+      "name": "Ethernaut challenges (SCH CTF Arena)",
       "kind": "Smart-contract CTF training",
-      "rank": 7,
-      "solved": 24,
-      "asOf": "2026-11-13",
-      "profile": "https://smartcontractshacking.com/tools/web3-ctf-challenges/players/1rdvaelMSngb"
+      "rank": 5,
+      "players": 267,
+      "title": "Elite Auditor",
+      "solved": 25,
+      "total": 25,
+      "asOf": "2026-11-23",
+      "profile": "https://smartcontractshacking.com/tools/web3-ctf-challenges/players/1rdvaelMSngb",
+      "featured": true
     }
   ]
 }

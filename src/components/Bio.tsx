@@ -1,4 +1,5 @@
 import TechCard from "./TechCard";
+import HeroCtf from "./HeroCtf";
 
 export default function Bio() {
   return (
@@ -15,12 +16,20 @@ export default function Bio() {
           and prove every finding with a working PoC.
         </p>
 
+        <HeroCtf />
+
         <div id="contact" className="flex flex-wrap gap-x-6 gap-y-2 mt-8 text-sm">
           <a
             href="https://github.com/SamarthShukla17"
             target="_blank"
             rel="noopener noreferrer">
             GitHub
+          </a>
+          <a
+            href="https://github.com/SamarthShukla17/web3-security-research"
+            target="_blank"
+            rel="noopener noreferrer">
+            Research log
           </a>
           <a
             href="https://x.com/Sam39741"

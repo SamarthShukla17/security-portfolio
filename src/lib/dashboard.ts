@@ -26,9 +26,14 @@ export interface PracticeEntry {
   name: string;
   kind: string;
   rank: number;
+  players?: number;
+  title?: string;
   solved: number;
+  total?: number;
   asOf: string;
   profile: string;
+  // Only entries marked featured appear on the home-page hero.
+  featured?: boolean;
 }
 
 const findings = data.findings as DashboardFinding[];
