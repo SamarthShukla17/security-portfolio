@@ -40,7 +40,6 @@ const findings = data.findings as DashboardFinding[];
 const practice = data.practice as PracticeEntry[];
 const undisclosed = data.confirmedUndisclosed as {
   severityKnown: UndisclosedSeverityCount[];
-  severityNotDisclosed: { count: number; source: string; state: string };
 };
 const platforms = data.platforms as DashboardPlatform[];
 
@@ -57,10 +56,7 @@ export const dashboard = {
   // Counts only, by design: no program names or details until cleared.
   confirmedUndisclosed: {
     severityKnown: undisclosed.severityKnown,
-    severityNotDisclosed: undisclosed.severityNotDisclosed,
-    total:
-      undisclosed.severityKnown.reduce((n, r) => n + r.count, 0) +
-      undisclosed.severityNotDisclosed.count,
+    total: undisclosed.severityKnown.reduce((n, r) => n + r.count, 0),
   },
   totals: {
     findings: findings.length,

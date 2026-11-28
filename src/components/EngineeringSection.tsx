@@ -2,42 +2,35 @@ import { projects } from "@/lib/projects";
 
 export default function EngineeringSection() {
   return (
-    <section
-      id="engineering"
-      className="max-w-3xl mx-auto px-4 py-16 border-t border-muted/20"
-    >
-      <p className="text-muted mb-6">$ ls engineering/</p>
+    <section id="engineering" className="max-w-3xl mx-auto px-4 py-14">
+      <h2 className="eyebrow mb-5">Engineering</h2>
 
-      <div className="space-y-8">
+      <div className="space-y-4">
         {projects.map((project) => (
-          <article key={project.slug} className="border border-muted/20 p-4">
-            <h3 className="text-foreground font-medium">{project.name}</h3>
+          <article key={project.slug} className="card card-hover p-6">
+            <h3 className="text-lg font-semibold tracking-tight">{project.name}</h3>
 
             <p className="mt-2 text-muted leading-relaxed">
               {project.description}
             </p>
 
-            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted/75">
+            <div className="mt-4 flex flex-wrap gap-1.5">
               {project.stack.map((tech) => (
-                <span key={tech}>[{tech}]</span>
+                <span key={tech} className="chip">
+                  {tech}
+                </span>
               ))}
             </div>
 
-            <div className="mt-3 flex flex-wrap gap-x-4 text-sm">
+            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm">
               {project.liveUrl && (
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  → live
+                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                  Live ↗
                 </a>
               )}
               {project.sourceUrl && (
-                <a
-                  href={project.sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  → source
+                <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer">
+                  Source ↗
                 </a>
               )}
             </div>

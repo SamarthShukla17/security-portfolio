@@ -8,8 +8,11 @@
   --color-foreground: rgb(var(--foreground-rgb));
   --color-muted: rgb(var(--muted-rgb));
 
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
   --font-mono:
-    var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 /*
@@ -74,12 +77,13 @@
     color: var(--foreground);
     background-color: var(--background);
     background-attachment: fixed;
-    font-family:
-      var(--font-plex), var(--font-mono), ui-monospace, SFMono-Regular, Menlo,
-      Consolas, monospace;
+    font-family: var(--font-sans);
+    font-size: 15px;
     font-weight: 400;
-    line-height: 1.6;
-    letter-spacing: -0.01em;
+    line-height: 1.65;
+    letter-spacing: -0.006em;
+    font-feature-settings: "cv11", "ss03";
+    -webkit-font-smoothing: antialiased;
     transition: background-color 0.2s ease, color 0.2s ease;
   }
 
@@ -87,7 +91,8 @@
   h2,
   h3,
   h4 {
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: -0.02em;
     color: var(--foreground);
   }
 
@@ -143,16 +148,19 @@
 }
 
 .writeup-content code {
-  background: rgb(var(--surface-rgb) / 0.6);
+  font-family: var(--font-mono);
+  background: rgb(var(--surface-rgb) / 0.8);
   padding: 0.15em 0.4em;
-  border-radius: 3px;
-  font-size: 0.9em;
+  border-radius: 6px;
+  font-size: 0.86em;
+  letter-spacing: 0;
 }
 
 .writeup-content pre {
-  background: rgb(var(--surface-rgb) / 0.6);
+  background: rgb(var(--surface-rgb) / 0.85);
   border: 1px solid rgb(var(--muted-rgb) / 0.15);
-  padding: 1em;
+  border-radius: 12px;
+  padding: 1em 1.1em;
   overflow-x: auto;
   margin-bottom: 1.25em;
 }
@@ -163,7 +171,7 @@
 }
 
 .writeup-content blockquote {
-  border-left: 1px solid rgb(var(--muted-rgb) / 0.4);
+  border-left: 2px solid rgb(var(--muted-rgb) / 0.3);
   padding-left: 1em;
   color: var(--muted);
   margin: 0 0 1em 0;
@@ -233,10 +241,11 @@ button,
   display: inline-block;
   font-family: inherit;
   font-size: 0.9rem;
+  font-weight: 500;
   line-height: 1.2;
-  letter-spacing: 0.01em;
-  padding: 0.6rem 1.25rem;
-  border-radius: 2px;
+  letter-spacing: 0;
+  padding: 0.65rem 1.3rem;
+  border-radius: 999px;
   text-decoration: none;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
@@ -287,49 +296,124 @@ a.cta-secondary:hover {
   background: var(--cta2-hover-bg);
 }
 
-/* quiet mono theme switch: [ light ] / [ dark ] (must not pick up the CTA button styles) */
+/* theme switch: a small round icon button (must not pick up the CTA button styles) */
 .theme-toggle,
 .theme-toggle:hover {
-  background: transparent;
-  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
   padding: 0;
-  border-radius: 0;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid rgb(var(--muted-rgb) / 0.25);
   color: var(--muted);
-  font: inherit;
-  font-size: 0.875rem;
-  letter-spacing: 0;
-  line-height: inherit;
-  cursor: pointer;
-  white-space: pre;
+  line-height: 1;
 }
 
 .theme-toggle:hover {
   color: var(--foreground);
+  border-color: rgb(var(--muted-rgb) / 0.5);
+  background: rgb(var(--surface-rgb) / 0.8);
 }
 
-/* Tech card (hero, right side) — quiet, paper-matching */
+.theme-toggle svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* ---------- shared surfaces ---------- */
+@layer components {
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.card {
+  border: 1px solid rgb(var(--muted-rgb) / 0.16);
+  border-radius: 16px;
+  background: rgb(var(--surface-rgb) / 0.78);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+a.card:hover,
+.card.card-hover:hover {
+  border-color: rgb(var(--muted-rgb) / 0.32);
+  box-shadow: 0 6px 24px -12px rgb(var(--foreground-rgb) / 0.25);
+}
+
+.chip {
+  display: inline-block;
+  font-size: 0.74rem;
+  line-height: 1.2;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--muted-rgb) / 0.22);
+  color: var(--muted);
+  white-space: nowrap;
+}
+}
+
+/* link row: quiet outlined pills */
+a.pill {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--muted-rgb) / 0.25);
+  color: var(--foreground);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+a.pill:hover {
+  background: rgb(var(--surface-rgb) / 0.9);
+  border-color: rgb(var(--muted-rgb) / 0.5);
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+/* nav links: no underline until hover */
+a.nav-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+a.nav-link:hover {
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+/* surfaces carry their own background, so they need no text blur pad */
+.card :is(p, h1, h2, h3, h4, li, dt, dd)::before,
+.card ::before {
+  display: none;
+}
+
+/* Tech card (hero, right side) */
 .tech-card {
-  background: #f0ede8;
-  border: 1px solid #e7e5e4;
-  padding: 1.25rem 1.5rem 0.5rem;
   width: 100%;
-  max-width: 230px;
+  max-width: 240px;
   flex: none;
+  padding: 1.25rem 1.25rem 0.5rem;
   font-size: 0.85rem;
   line-height: 1.5;
-  color: #1c1917;
+  color: var(--foreground);
 }
 .tech-card h3 {
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  margin: 0 0 0.5rem 0;
-  color: #57534e;
+  margin: 0 0 0.6rem 0;
 }
-.tech-card p { margin: 0 0 1rem 0; }
-[data-theme="dark"] .tech-card { background: #242220; border-color: #3f3a36; color: #e7e5e4; }
-[data-theme="dark"] .tech-card h3 { color: #a8a29e; }
+.tech-card .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 1.1rem 0;
+}
 
 /* Pen-and-ink temple, fixed behind everything. Grain stays on body::before. */
 :root { --bg-image-opacity: 0.13; }
@@ -416,4 +500,3 @@ footer p::before {
 body { overflow-x: clip; }
 
 /* cards with their own opaque background don't need it */
-.tech-card :is(p, h3)::before { display: none; }

@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
-const plexMono = IBM_Plex_Mono({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-plex",
+  variable: "--font-inter",
   display: "swap",
 });
 
+// Monospace is kept for code blocks only.
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-mono",
+  weight: ["400", "500"],
+  variable: "--font-jetbrains",
   display: "swap",
 });
 
@@ -42,12 +43,12 @@ export default function RootLayout({
         } as React.CSSProperties
       }
       suppressHydrationWarning
-      className={`${plexMono.variable} ${jetbrainsMono.variable}`}
+      className={`${inter.variable} ${jetbrainsMono.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="antialiased bg-background text-foreground min-h-screen">
+      <body className="antialiased bg-background text-foreground min-h-screen font-sans">
         {/* Turns the sketch's "darker than paper" into alpha so only the ink
             remains, tinted per theme — the page background shows through. */}
         <svg width="0" height="0" aria-hidden="true" focusable="false" style={{ position: "absolute" }}>

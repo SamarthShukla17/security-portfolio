@@ -41,43 +41,32 @@ export default async function WriteupPage({
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-12 text-sm">
-      <div className="border border-muted/20 px-4 py-3 mb-10">
-        <p className="text-muted/75">## {meta.slug}.md</p>
-        <p className="text-base text-foreground mt-1 font-medium">{meta.title}</p>
-        <div className="flex flex-wrap gap-x-6 gap-y-1 mt-3 text-muted">
-          <span>date: {format(new Date(meta.date), "yyyy-MM-dd")}</span>
-          <span>protocol: {meta.protocol}</span>
+    <main className="max-w-3xl mx-auto px-4 pt-14 pb-12">
+      <header className="mb-10">
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight leading-tight text-balance">
+          {meta.title}
+        </h1>
+        <div className="flex flex-wrap items-center gap-2 mt-5">
+          <span className="chip">{format(new Date(meta.date), "yyyy-MM-dd")}</span>
+          <span className="chip">{meta.protocol}</span>
           {meta.status === "Engagement" ? (
             <>
-              {meta.chain && <span>chain: {meta.chain}</span>}
-              {meta.scope && <span>scope: {meta.scope}</span>}
+              {meta.chain && <span className="chip">{meta.chain}</span>}
+              {meta.scope && <span className="chip">{meta.scope}</span>}
             </>
           ) : meta.status === "Methodology" ? null : (
-            <span>
-              severity:{" "}
-              <span className={severityClassName[meta.severity]}>
-                {meta.severity}
-              </span>
+            <span className={`chip ${severityClassName[meta.severity]}`}>
+              {meta.severity}
             </span>
           )}
+          <span className={`chip ${statusClassName[meta.status]}`}>{meta.status}</span>
           {meta.pdf && (
-            <span>
-              pdf:{" "}
-              <a
-                href={`${base}${meta.pdf}`}>
-                download
-              </a>
-            </span>
+            <a href={`${base}${meta.pdf}`} className="pill">
+              Download PDF
+            </a>
           )}
-          <span>
-            status:{" "}
-            <span className={statusClassName[meta.status]}>
-              {meta.status}
-            </span>
-          </span>
         </div>
-      </div>
+      </header>
 
       <article
         className="writeup-content"

@@ -9,22 +9,22 @@ export default function DashboardSummary() {
     [t.medium, "medium"],
   ];
   return (
-    <section className="max-w-3xl mx-auto px-4 py-16 border-t border-muted/20 text-sm">
-      <div className="flex items-baseline justify-between mb-6">
-        <p className="text-muted">$ cat dashboard</p>
-        <Link href="/dashboard">
-          full dashboard →
+    <section className="max-w-3xl mx-auto px-4 py-14">
+      <div className="flex items-baseline justify-between mb-5">
+        <h2 className="eyebrow">Dashboard</h2>
+        <Link href="/dashboard" className="text-sm">
+          Full dashboard →
         </Link>
       </div>
-      <div className="grid grid-cols-3 border border-muted/20">
+      <div className="card grid grid-cols-3 divide-x divide-muted/15">
         {stats.map(([n, label]) => (
-          <div key={label} className="px-4 py-4 border-r border-muted/20 last:border-r-0">
-            <p className="text-2xl text-foreground">{n}</p>
-            <p className="text-xs text-muted/80 mt-1">{label}</p>
+          <div key={label} className="px-5 py-5">
+            <p className="text-3xl font-semibold tracking-tight">{n}</p>
+            <p className="text-xs text-muted mt-1">{label}</p>
           </div>
         ))}
       </div>
-      <p className="mt-3 text-xs text-muted/75">
+      <p className="mt-3 text-xs text-muted">
         Published with the program&apos;s permission. Source: HackenProof.
       </p>
     </section>

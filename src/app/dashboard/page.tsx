@@ -19,31 +19,31 @@ export default function DashboardPage() {
   ];
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-12 text-sm">
-      <p className="text-muted mb-1">$ cat dashboard</p>
-      <p className="text-xs text-muted/75 mb-6">updated {updated}</p>
+    <main className="max-w-3xl mx-auto px-4 pt-14 pb-12">
+      <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">Dashboard</h1>
+      <p className="text-muted mt-2 mb-8">Updated {updated}</p>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 border border-muted/20">
+      <div className="card grid grid-cols-2 sm:grid-cols-4 overflow-hidden">
         {stats.map(([n, label]) => (
-          <div key={label} className="px-4 py-4 border-b sm:border-b-0 border-r border-muted/20 last:border-r-0">
-            <p className="text-2xl text-foreground">{n}</p>
-            <p className="text-xs text-muted/80 mt-1">{label}</p>
+          <div key={label} className="px-5 py-5 border-b sm:border-b-0 border-r border-muted/15 last:border-r-0">
+            <p className="text-3xl font-semibold tracking-tight">{n}</p>
+            <p className="text-xs text-muted mt-1">{label}</p>
           </div>
         ))}
       </div>
 
-      <p className="text-muted mt-12 mb-4">$ ls findings/</p>
-      <div className="border border-muted/20">
-        <div className="hidden sm:grid grid-cols-[8.5rem_minmax(0,1fr)_4.5rem] gap-4 px-3 py-2 text-xs uppercase tracking-wide text-muted/75 border-b border-muted/20">
-          <span>id</span>
-          <span>title</span>
-          <span>severity</span>
+      <h2 className="eyebrow mt-12 mb-4">Findings</h2>
+      <div className="card overflow-hidden">
+        <div className="hidden sm:grid grid-cols-[8.5rem_minmax(0,1fr)_4.5rem] gap-4 px-4 py-2.5 eyebrow border-b border-muted/15">
+          <span>ID</span>
+          <span>Title</span>
+          <span>Severity</span>
         </div>
         {findings.map((f) => (
           <Link
             key={f.id}
             href={`/writeups/${f.slug}`}
-            className="plain grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[8.5rem_minmax(0,1fr)_4.5rem] gap-x-4 gap-y-1 items-baseline px-3 py-2 border-b border-muted/10 last:border-b-0 hover:bg-muted/5"
+            className="plain grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[8.5rem_minmax(0,1fr)_4.5rem] gap-x-4 gap-y-1 items-baseline px-4 py-3 border-b border-muted/10 last:border-b-0 hover:bg-muted/5"
           >
             <span className="text-muted order-1">{f.id}</span>
             <span className="text-foreground order-3 col-span-2 sm:col-span-1 sm:order-2 break-words">{f.title}</span>
@@ -52,42 +52,39 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      <p className="text-muted mt-12 mb-1">$ ls confirmed/</p>
-      <p className="text-xs text-muted/75 mb-4">confirmed, not yet disclosed</p>
+      <h2 className="eyebrow mt-12 mb-1">Confirmed, not yet disclosed</h2>
+      <p className="text-sm text-muted mb-4">Counts only.</p>
 
-      <p className="text-xs uppercase tracking-wide text-muted/75 mb-2">severity confirmed</p>
-      <div className="grid grid-cols-2 border border-muted/20">
+      <p className="text-sm text-muted mb-2">Severity confirmed</p>
+      <div
+        className="card grid overflow-hidden"
+        style={{ gridTemplateColumns: `repeat(${cu.severityKnown.length}, minmax(0, 1fr))` }}
+      >
         {cu.severityKnown.map((r) => (
-          <div key={r.severity} className="px-4 py-4 border-r border-muted/20 last:border-r-0">
-            <p className="text-2xl text-foreground">{r.count}</p>
-            <p className="text-xs text-muted/80 mt-1">{r.severity.toLowerCase()}</p>
+          <div key={r.severity} className="px-5 py-5 border-r border-muted/15 last:border-r-0">
+            <p className="text-3xl font-semibold tracking-tight">{r.count}</p>
+            <p className="text-xs text-muted mt-1">{r.severity.toLowerCase()}</p>
           </div>
         ))}
       </div>
 
-      <p className="text-xs uppercase tracking-wide text-muted/75 mt-6 mb-2">severity not disclosed</p>
-      <div className="border border-muted/20 px-4 py-4">
-        <p className="text-2xl text-foreground">{cu.severityNotDisclosed.count}</p>
-        <p className="text-xs text-muted/80 mt-1">
-          {cu.severityNotDisclosed.state} · {cu.severityNotDisclosed.source}
-        </p>
-      </div>
-
-      <p className="mt-3 text-xs text-muted/75 leading-relaxed">
-        Counts only. No programs or details are published until cleared. Severities are as
+      <p className="mt-3 text-xs text-muted leading-relaxed">
+        No programs or details are published until cleared. Severities are as
         confirmed so far and can change until final judging.
       </p>
 
-      <p className="text-muted mt-12 mb-4">$ ls platforms/</p>
+      <h2 className="eyebrow mt-12 mb-4">Platforms</h2>
       <ul className="space-y-3">
         {platforms.map((p) => {
           const mine = findings.filter((f) => f.platform === p.name);
           const programs = [...new Set(mine.map((f) => f.program))];
           return (
-            <li key={p.name} className="border border-muted/20 px-4 py-3">
-              <p className="text-foreground font-medium">{p.name}</p>
+            <li key={p.name} className="card px-5 py-4">
+              <p className="font-semibold tracking-tight">{p.name}</p>
               <p className="text-muted mt-1">
-                {mine.length} findings · {programs.join(", ")}
+                {mine.length === 0
+                  ? "No disclosed findings yet"
+                  : `${mine.length} findings · ${programs.join(", ")}`}
               </p>
               <a
                 href={p.profile}
@@ -95,14 +92,14 @@ export default function DashboardPage() {
                 rel="noopener noreferrer"
                 className="inline-block mt-2"
               >
-                → public profile
+                Public profile ↗
               </a>
               {p.report && (
                 <a
                   href={`${base}${p.report}`}
                   className="inline-block mt-2 ml-4"
                 >
-                  → full report (PDF)
+                  Full report (PDF)
                 </a>
               )}
             </li>
@@ -110,28 +107,28 @@ export default function DashboardPage() {
         })}
       </ul>
 
-      <p className="text-muted mt-12 mb-4">$ ls practice/</p>
+      <h2 className="eyebrow mt-12 mb-4">Practice</h2>
       <ul className="space-y-3">
         {practice.map((e) => (
-          <li key={e.name} className="border border-muted/20 px-4 py-3">
-            <p className="text-foreground font-medium">{e.name}</p>
+          <li key={e.name} className="card px-5 py-4">
+            <p className="font-semibold tracking-tight">{e.name}</p>
             <p className="text-muted mt-1">
               {e.kind} · rank #{e.rank}{e.players ? ` of ${e.players}` : ""}{e.title ? ` (${e.title})` : ""} · {e.solved}{e.total ? `/${e.total}` : ""} solved
             </p>
-            <p className="text-xs text-muted/75 mt-1">as of {e.asOf}; rank changes as the board moves</p>
+            <p className="text-xs text-muted mt-1">As of {e.asOf}; rank changes as the board moves</p>
             <a
               href={e.profile}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-2"
             >
-              → public profile
+              Public profile ↗
             </a>
           </li>
         ))}
       </ul>
 
-      <p className="mt-10 text-xs text-muted/75 leading-relaxed">
+      <p className="mt-10 text-xs text-muted leading-relaxed">
         The disclosed findings above are the ones published with the program&apos;s
         permission. Their severity is as rated by the platform&apos;s triage, not self-assessed.
       </p>

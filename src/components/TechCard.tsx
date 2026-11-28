@@ -1,5 +1,3 @@
-import { Fragment } from "react";
-
 // Scope of work, drawn from the private research archive's engagement index
 // (portfolio/engagements.csv). Category level only — no program names.
 const groups: { title: string; items: string[] }[] = [
@@ -13,20 +11,17 @@ const groups: { title: string; items: string[] }[] = [
 
 export default function TechCard() {
   return (
-    <aside className="tech-card" aria-label="Scope of work">
+    <aside className="tech-card card" aria-label="Scope of work">
       {groups.map((g) => (
         <section key={g.title}>
-          <h3>{g.title}</h3>
-          <p>
-            {g.items.map((item, i) => (
-              <Fragment key={item}>
-                <span className="whitespace-nowrap">
-                  {item}
-                  {i < g.items.length - 1 ? " ·" : ""}
-                </span>{" "}
-              </Fragment>
+          <h3 className="eyebrow">{g.title}</h3>
+          <div className="chips">
+            {g.items.map((item) => (
+              <span key={item} className="chip">
+                {item}
+              </span>
             ))}
-          </p>
+          </div>
         </section>
       ))}
     </aside>

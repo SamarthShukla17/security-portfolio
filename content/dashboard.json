@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-13",
+  "updated": "2026-11-28",
   "findings": [
     {
       "id": "RAINUSDR-1746",
@@ -47,28 +47,35 @@
       "name": "HackenProof",
       "profile": "https://hackenproof.com/hackers/Samarth28",
       "report": "/reports/RAIN-USDR_Smart_Contract_Audit_Report.pdf"
+    },
+    {
+      "name": "Immunefi",
+      "profile": "https://immunefi.com/profile/samarth28/"
+    },
+    {
+      "name": "Cantina",
+      "profile": "https://cantina.xyz/u/sxyz"
     }
   ],
   "confirmedUndisclosed": {
     "severityKnown": [
       {
-        "severity": "Medium",
-        "count": 6
+        "severity": "High",
+        "count": 1
       },
       {
-        "severity": "Informational",
-        "count": 1
+        "severity": "Medium",
+        "count": 3
+      },
+      {
+        "severity": "Informative",
+        "count": 13
       }
-    ],
-    "severityNotDisclosed": {
-      "count": 2,
-      "source": "HackenProof bug bounty",
-      "state": "triaged"
-    }
+    ]
   },
   "practice": [
     {
-      "name": "Ethernaut challenges (SCH CTF Arena)",
+      "name": "Puzzle Wallet, Ethernaut CTF challenge (SCH CTF Arena)",
       "kind": "Smart-contract CTF training",
       "rank": 5,
       "players": 267,

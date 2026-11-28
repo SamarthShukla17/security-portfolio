@@ -11,19 +11,22 @@ export default function WriteupsPage() {
   const writeups = getAllWriteups();
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-12 text-sm">
-      <p className="text-muted mb-6">$ ls writeups/</p>
+    <main className="max-w-3xl mx-auto px-4 pt-14 pb-12">
+      <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">Writeups</h1>
+      <p className="text-muted mt-2 mb-8">
+        Method notes, engagements and audit reports.
+      </p>
 
-      <div className="border border-muted/20">
-        <div className="grid grid-cols-[5.5rem_minmax(0,1fr)_auto] sm:grid-cols-[6rem_1fr_7rem_6rem] gap-4 px-3 py-2 text-xs uppercase tracking-wide text-muted/75 border-b border-muted/20">
-          <span>date</span>
-          <span>title</span>
-          <span className="hidden sm:block">protocol</span>
-          <span>severity</span>
+      <div className="card overflow-hidden">
+        <div className="grid grid-cols-[5.5rem_minmax(0,1fr)_auto] sm:grid-cols-[6rem_1fr_8rem_6.5rem] gap-x-4 px-4 py-2.5 eyebrow border-b border-muted/15">
+          <span>Date</span>
+          <span>Title</span>
+          <span className="hidden sm:block">Protocol</span>
+          <span>Severity</span>
         </div>
 
         {writeups.length === 0 && (
-          <div className="px-3 py-6 text-muted/75">-- empty --</div>
+          <div className="px-4 py-6 text-muted">Nothing published yet.</div>
         )}
 
         {writeups.map((w) => (

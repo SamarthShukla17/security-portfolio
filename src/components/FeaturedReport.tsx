@@ -20,28 +20,22 @@ export default function FeaturedReport() {
   const t = dashboard.totals;
 
   return (
-    <section className="max-w-3xl mx-auto px-4 py-16 border-t border-muted/20 text-sm">
-      <p className="text-muted mb-6">$ ls reports/</p>
-      <div className="border border-muted/20 p-4 hover:bg-muted/5">
-        <p className="text-xs uppercase tracking-wide text-muted/75">audit report · pdf{size && ` · ${size}`}</p>
-        <h3 className="text-foreground font-medium mt-2">{report.title}</h3>
-        <p className="text-muted mt-1">
+    <section className="max-w-3xl mx-auto px-4 py-14">
+      <h2 className="eyebrow mb-5">Featured report</h2>
+      <div className="card card-hover p-6">
+        <p className="text-xs text-muted">Audit report · PDF{size && ` · ${size}`}</p>
+        <h3 className="text-lg sm:text-xl font-semibold tracking-tight mt-2">{report.title}</h3>
+        <p className="text-muted mt-1.5">
           {report.protocol} · {t.high} high · {t.medium} medium
         </p>
-        <p className="mt-3 text-muted leading-relaxed">
+        <p className="mt-4 text-muted leading-relaxed">
           Full public disclosure with root causes, executed proof-of-concept evidence, and recommended fixes.
         </p>
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          <a
-            href={`${base}${report.pdf}`}
-            className="cta"
-          >
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <a href={`${base}${report.pdf}`} className="cta">
             Download PDF
           </a>
-          <Link
-            href={`/writeups/${report.slug}`}
-            className="cta-secondary"
-          >
+          <Link href={`/writeups/${report.slug}`} className="cta-secondary">
             Read online
           </Link>
         </div>
